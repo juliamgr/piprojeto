@@ -3,10 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+  rel="stylesheet"
+  href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps.css"/>
+<script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
 <link rel="stylesheet" href="index.css">
     <title>Agrolink</title>
 </head>
 <body>
+    <header>
+        <h1>🌱 Agrolink</h1>
+        <nav>
+            <a href="#">Início</a>
+            <a href="#">Mapa de Alimentos</a>
+            <a href="#">Para Produtores</a>
+            <a href="#">Impacto Social</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>Combate à Fome e Redução do Desperdício</h2>
+        <p>Conectamos fazendas locais, supermercados e organizações para levar alimentos frescos a quem mais precisa, fortalecendo a agricultura familiar.</p>
+        <a href="#" class="btn">Acessar Plataforma / Mapa</a>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <h3>🌍 Sustentabilidade</h3>
+            <p>Minimizamos o descarte de alimentos excedentes ou próximos ao vencimento, reduzindo impactos ambientais.</p>
+        </div>
+        <div class="card">
+            <h3>🤝 Agricultura Familiar</h3>
+            <p>Criamos circuitos curtos de comercialização, valorizando pequenos produtores e impulsionando a economia local.</p>
+        </div>
+        <div class="card">
+            <h3>🍲 Segurança Alimentar</h3>
+            <p>Garantimos acesso regular a produtos frescos e nutritivos para populações em situação de vulnerabilidade.</p>
+        </div>
+    </section>
+    <div id="map"></div>
+    <footer>
+        <p>&copy; 2026 Agrolink. Todos os direitos reservados. Projeto voltado aos ODS 2 e 12 da ONU.</p>
+    </footer>
     
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
