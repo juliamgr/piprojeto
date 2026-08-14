@@ -1,52 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-  rel="stylesheet"
-  href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps.css"/>
-<script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
-<link rel="stylesheet" href="index.css">
-    <title>Agrolink</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agrolink — produtos orgânicos da agricultura familiar do Rio Grande do Sul.">
+  <title>Agrolink</title>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <header>
-        <h1>🌱 Agrolink</h1>
-        <nav>
-            <a href="#">Início</a>
-            <a href="#">Mapa de Alimentos</a>
-            <a href="#">Para Produtores</a>
-            <a href="#">Impacto Social</a>
-        </nav>
-    </header>
+<main>
+  <div class="delivery-strip">
+    <span>Entrega refrigerada em Porto Alegre e região</span>
+    <span class="delivery-strip-dot" aria-hidden="true"></span>
+    <span>Frete grátis a partir de R$ 120</span>
+  </div>
 
-    <section class="hero">
-        <h2>Combate à Fome e Redução do Desperdício</h2>
-        <p>Conectamos fazendas locais, supermercados e organizações para levar alimentos frescos a quem mais precisa, fortalecendo a agricultura familiar.</p>
-        <a href="#" class="btn">Acessar Plataforma / Mapa</a>
-    </section>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Agrolink — início">Agrolink<span class="brand-leaf" aria-hidden="true"></span></a>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="#inicio">Início</a>
+      <a href="#feira">Feira</a>
+      <a href="#produtores">Produtores</a>
+      <a href="#como-funciona">Como funciona</a>
+    </nav>
+    <div class="header-actions">
+      <label class="location-select">
+        <i data-lucide="map-pin" aria-hidden="true"></i>
+        <span class="sr-only">Região de entrega</span>
+        <select aria-label="Selecione sua região">
+          <option>Porto Alegre</option>
+          <option>Canoas</option>
+          <option>Viamão</option>
+          <option>Guaíba</option>
+        </select>
+        <i data-lucide="chevron-down" aria-hidden="true"></i>
+      </label>
+      <button class="bag-button" id="open-cart" type="button" aria-label="Abrir sacola">
+        <i data-lucide="shopping-bag" aria-hidden="true"></i>
+        <span class="bag-count" id="bag-count" hidden>0</span>
+      </button>
+      <button class="menu-button" id="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
 
-    <section class="features">
-        <div class="card">
-            <h3>🌍 Sustentabilidade</h3>
-            <p>Minimizamos o descarte de alimentos excedentes ou próximos ao vencimento, reduzindo impactos ambientais.</p>
+  <section class="hero section-shell" id="inicio">
+    <div class="hero-copy">
+      <p class="eyebrow"><i data-lucide="leaf"></i> Produtos orgânicos</p>
+      <h1>Da lavoura gaúcha direto para a sua mesa.</h1>
+      <p class="hero-description">Frutas, verduras e cestas orgânicas de famílias produtoras do Rio Grande do Sul — com origem conhecida, preço justo e menos desperdício.</p>
+      <div class="hero-actions">
+        <button class="button button-primary" id="buy-now" type="button">Comprar agora <i data-lucide="arrow-right"></i></button>
+        <a class="button button-secondary" href="#produtores">Conhecer produtores <i data-lucide="arrow-right"></i></a>
+      </div>
+      <div class="hero-proof" aria-label="Resultados da rede Agrolink">
+        <span><strong>42</strong> famílias</span>
+        <span><strong>18</strong> municípios</span>
+        <span><strong>48h</strong> da horta</span>
+      </div>
+    </div>
+    <div class="hero-image-wrap">
+      <img class="hero-image" src="img/agrolink-hero.png" alt="Mãos de agricultor organizando uma cesta de hortaliças recém-colhidas">
+      <div class="harvest-note">
+        <span class="harvest-icon"><i data-lucide="clock-3"></i></span>
+        <span><strong>Colheita de hoje</strong>Chega fresca até você</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-band section-shell" aria-label="Compromissos Agrolink">
+    <article><span class="trust-icon"><i data-lucide="shield-check"></i></span><div><strong>Origem verificada</strong><small>Você sabe quem cultivou</small></div></article>
+    <article><span class="trust-icon"><i data-lucide="sprout"></i></span><div><strong>Colheita fresca</strong><small>Menos tempo no caminho</small></div></article>
+    <article><span class="trust-icon"><i data-lucide="handshake"></i></span><div><strong>Preço justo</strong><small>Mais valor para quem produz</small></div></article>
+  </section>
+
+  <section class="catalog-section" id="feira">
+    <div class="section-shell">
+      <div class="section-heading split-heading">
+        <div>
+          <p class="eyebrow"><i data-lucide="leaf"></i> Feira da semana</p>
+          <h2>Fresco agora, perto de você.</h2>
+          <span class="catalog-live is-connected"><span aria-hidden="true"></span> Estoque disponível nesta página</span>
         </div>
-        <div class="card">
-            <h3>🤝 Agricultura Familiar</h3>
-            <p>Criamos circuitos curtos de comercialização, valorizando pequenos produtores e impulsionando a economia local.</p>
-        </div>
-        <div class="card">
-            <h3>🍲 Segurança Alimentar</h3>
-            <p>Garantimos acesso regular a produtos frescos e nutritivos para populações em situação de vulnerabilidade.</p>
-        </div>
-    </section>
-    <div id="map"></div>
-    <footer>
-        <p>&copy; 2026 Agrolink. Todos os direitos reservados. Projeto voltado aos ODS 2 e 12 da ONU.</p>
-    </footer>
-    
-    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
+        <p>Disponibilidade das famílias parceiras. O cardápio muda com a estação — exatamente como a natureza.</p>
+      </div>
+
+      <div class="catalog-tools">
+        <div class="category-list" id="categories" aria-label="Filtrar por categoria"></div>
+        <label class="search-field">
+          <i data-lucide="search" aria-hidden="true"></i>
+          <span class="sr-only">Buscar produtos</span>
+          <input id="search" type="search" placeholder="Buscar na feira">
+        </label>
+      </div>
+
+      <div class="product-grid" id="product-grid"></div>        
+      </div>
+    </div>
+  </section>
+
+  <section class="producer-section section-shell" id="produtores">
+    <div class="producer-image-stack" aria-hidden="true">
+      <img src="img/agrolink-folhas.png" alt="">
+      <img src="img/agrolink-frutas.png" alt="">
+      <div class="producer-seal"><i data-lucide="users"></i><strong>100%</strong><span>agricultura<br>familiar</span></div>
+    </div>
+    <div class="producer-copy">
+      <p class="eyebrow"><i data-lucide="users"></i> Quem cultiva</p>
+      <h2>Antes de ser alimento, é história de família.</h2>
+      <p>Cada produto da Agrolink tem nome, município e uma família por trás. A compra direta reduz atravessadores e remunera melhor quem trabalha a terra, sem encarecer a sua cesta.</p>
+      <blockquote>“Agora colhemos sabendo para onde vai. Isso muda o planejamento da semana e evita que alimento bom fique na lavoura.”</blockquote>
+      <div class="quote-author"><span>MB</span><div><strong>Marina Becker</strong><small>Produtora agroecológica · Nova Santa Rita</small></div></div>
+      <a class="text-link" href="#como-funciona">Conheça nossa rede <i data-lucide="arrow-right"></i></a>
+    </div>
+  </section>
+
+  <section class="how-section" id="como-funciona">
+    <div class="section-shell">
+      <div class="section-heading centered-heading">
+        <p class="eyebrow"><i data-lucide="sprout"></i> Simples e transparente</p>
+        <h2>Da horta até você, sem desvios.</h2>
+        <p>Um caminho curto preserva o frescor e deixa mais valor com quem produz.</p>
+      </div>
+      <div class="steps-grid">
+        <article><span class="step-number">01</span><span class="step-icon"><i data-lucide="search"></i></span><h3>Escolha na feira</h3><p>Veja o que foi colhido na semana e monte sua cesta.</p></article>
+        <article><span class="step-number">02</span><span class="step-icon"><i data-lucide="scan-line"></i></span><h3>Confira a origem</h3><p>Saiba qual família cultivou e em qual município.</p></article>
+        <article><span class="step-number">03</span><span class="step-icon"><i data-lucide="wallet-cards"></i></span><h3>Pague com segurança</h3><p>Pix após confirmação ou pagamento na entrega, sem surpresa.</p></article>
+        <article><span class="step-number">04</span><span class="step-icon"><i data-lucide="truck"></i></span><h3>Receba fresquinho</h3><p>Entregas refrigeradas às quartas e aos sábados.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="impact-section">
+    <div class="impact-copy">
+      <p class="eyebrow light"><i data-lucide="recycle"></i> Menos desperdício</p>
+      <h2>O que é colhido encontra uma mesa.</h2>
+      <p>A demanda chega antes da colheita. Assim, as famílias planejam melhor, reduzem perdas e entregam alimentos naturalmente mais frescos.</p>
+      <button class="button button-light" id="impact-buy" type="button">Monte sua cesta <i data-lucide="arrow-right"></i></button>
+    </div>
+    <div class="impact-stats">
+      <article><strong>3,8 t</strong><span>de alimentos aproveitados</span></article>
+      <article><strong>27%</strong><span>mais renda média ao produtor</span></article>
+      <article><strong>86 km</strong><span>de distância média até você</span></article>
+    </div>
+  </section>
+
+  <section class="testimonial-section section-shell">
+    <div class="testimonial-card">
+      <div class="stars" aria-label="5 estrelas">
+        <i data-lucide="star" fill="currentColor"></i><i data-lucide="star" fill="currentColor"></i><i data-lucide="star" fill="currentColor"></i><i data-lucide="star" fill="currentColor"></i><i data-lucide="star" fill="currentColor"></i>
+      </div>
+      <blockquote>“Parece a feira de sábado, só que eu sei exatamente de onde veio cada item. A couve chegou linda e a cesta durou a semana toda.”</blockquote>
+      <p><strong>Carolina M.</strong><span>Cliente em Porto Alegre</span></p>
+    </div>
+    <div class="newsletter-card">
+      <p class="eyebrow"><i data-lucide="leaf"></i> Novidades da colheita</p>
+      <h2>Receba a feira da semana.</h2>
+      <p>Produtos sazonais, novas famílias e receitas simples no seu e-mail.</p>
+      <form id="newsletter-form">
+        <label class="sr-only" for="newsletter-email">Seu melhor e-mail</label>
+        <input id="newsletter-email" name="email" type="email" placeholder="Seu melhor e-mail" required>
+        <input class="form-honeypot" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" aria-label="Cadastrar e-mail"><i data-lucide="arrow-right"></i></button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-main section-shell">
+      <div class="footer-brand">
+        <a class="brand brand-light" href="#inicio">Agrolink<span class="brand-leaf"></span></a>
+        <p>Alimento orgânico, origem próxima e relações mais justas no Rio Grande do Sul.</p>
+        <div class="social-links"><a href="#inicio" aria-label="Instagram"><i data-lucide="camera"></i></a><a href="#inicio" aria-label="LinkedIn"><i data-lucide="globe"></i></a></div>
+      </div>
+      <div><h3>Agrolink</h3><a href="#feira">Feira da semana</a><a href="#produtores">Produtores</a><a href="#como-funciona">Como funciona</a></div>
+      <div><h3>Atendimento</h3><a href="mailto:oi@agrolink.com.br">oi@agrolink.com.br</a><span>Seg–sex, 8h às 18h</span><span>Porto Alegre, RS</span></div>
+      <div class="certification"><i data-lucide="shield-check"></i><span><strong>Rede verificada</strong>Produtores com origem e manejo conferidos.</span></div>
+    </div>
+    <div class="footer-bottom section-shell"><span>© 2026 Agrolink. Feito no Rio Grande do Sul.</span><span>Termos de uso · Privacidade</span></div>
+  </footer>
+
+  <div class="sr-status" id="status" role="status" aria-live="polite"></div>
+
+  <div class="cart-layer" id="cart-layer" role="presentation" hidden>
+    <button class="cart-backdrop" id="cart-backdrop" type="button" aria-label="Fechar sacola"></button>
+    <aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <div class="cart-header">
+        <div><p id="cart-kicker">Sua compra</p><h2 id="cart-title">Sacola da feira</h2></div>
+        <button type="button" id="close-cart" aria-label="Fechar sacola"><i data-lucide="x"></i></button>
+      </div>
+      <div id="cart-content"></div>
+    </aside>
+  </div>
+</main>
+
+<script src="https://unpkg.com/lucide@latest"></script>
 <script src="script.js"></script>
 </body>
 </html>
