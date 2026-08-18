@@ -1,11 +1,4 @@
-const products = [
-    {id:1,name:"Cesta Essencial da Semana",category:"Cestas",price:42.9,unit:"8 itens sazonais",producer:"Rede Raízes do Sul",location:"Nova Santa Rita",image:"img/agrolink-hero.png",imagePosition:"center 62%",badge:"Mais pedida",stock:20},
-    {id:2,name:"Morango orgânico",category:"Frutas",price:12.9,unit:"bandeja 250 g",producer:"Família Klein",location:"Bom Princípio",image:"img/morango.jpg",imagePosition:"35% center",badge:"Da estação",stock:40},
-    {id:3,name:"Alface crespa",category:"Folhas",price:6.9,unit:"unidade",producer:"Verdes Campos",location:"Viamão",image:"img/alface-crespa.jpg",imagePosition:"25% center",stock:50},
-    {id:4,name:"Bergamota montenegrina",category:"Frutas",price:9.8,unit:"pacote 1 kg",producer:"Sítio São Miguel",location:"Montenegro",image:"img/bergamota-montenegrina.webp",imagePosition:"70% center",stock:35},
-    {id:5,name:"Tomate italiano",category:"Legumes",price:10.5,unit:"pacote 500 g",producer:"Família Rossi",location:"Feliz",image:"img/tomate.webp",imagePosition:"54% 70%",badge:"Colhido hoje",stock:45},
-    {id:6,name:"Couve-manteiga",category:"Folhas",price:5.9,unit:"maço",producer:"Chácara Linha Verde",location:"Guaíba",image:"img/couve-manteiga.webp",imagePosition:"75% center",stock:50}
-  ];
+let products = [];
   
   const categories = ["Todos","Cestas","Folhas","Frutas","Legumes"];
   const state = {
@@ -72,7 +65,7 @@ const products = [
       return categoryOk && (!query || text.includes(query));
     });
   
-    $("#product-grid").innerHTML = filtered.map(p => {
+    $("#product-grid").innerHTML = filtered.length ? filtered.map(p => {
       const qty = Number(state.cart[p.id] || 0);
       return `
         <article class="product-card">
@@ -97,7 +90,7 @@ const products = [
             </div>
           </div>
         </article>`;
-    }).join("");
+    }).join("") : `<p class="catalog-message">Nenhum produto encontrado.</p>`;
   
    
     if(window.lucide) lucide.createIcons();
@@ -127,7 +120,7 @@ const products = [
           <span><i data-lucide="check"></i></span>
           <h3>Pedido registrado!</h3>
           <p class="order-code">Código <strong>${state.receipt.code}</strong></p>
-          <p>Este site por enquanto não tem servidor, os dados do pedido ficam apenas como demonstração local.</p>
+          <p>Seu pedido foi salvo com segurança. A equipe Agrolink entrará em contato para confirmar a entrega.</p>
           <div class="order-total"><span>Total do pedido</span><strong>${money(state.receipt.total)}</strong></div>
           <button class="button button-primary" id="back-to-market" type="button">Voltar à feira</button>
         </div>`;
@@ -196,10 +189,22 @@ const products = [
     lucide.createIcons();
   }
   
-  function makeCode(){
-    const now = new Date();
-    const date = now.toISOString().slice(2,10).replaceAll("-","");
-    return `AGR-${date}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;
+  async function api(url, options = {}){
+    const response = await fetch(url, {headers:{"Content-Type":"application/json"}, ...options});
+    const data = await response.json().catch(() => ({}));
+    if(!response.ok) throw new Error(data.message || "Não foi possível concluir a solicitação.");
+    return data;
+  }
+
+  async function loadProducts(){
+    $("#product-grid").innerHTML = `<p class="catalog-message">Carregando a feira...</p>`;
+    try {
+      const data = await api("api/products.php");
+      products = data.products;
+      renderProducts();
+    } catch (error) {
+      $("#product-grid").innerHTML = `<p class="catalog-message">${error.message} Abra o projeto pelo Apache do XAMPP.</p>`;
+    }
   }
   
   document.addEventListener("click", e => {
@@ -253,19 +258,27 @@ const products = [
     renderProducts();
   });
   
-  $("#newsletter-form").addEventListener("submit", e => {
+  $("#newsletter-form").addEventListener("submit", async e => {
     e.preventDefault();
     const email = $("#newsletter-email").value.trim();
     if(!email) return;
-    localStorage.setItem("agrolink-newsletter", email);
-    e.currentTarget.reset();
-    status("Cadastro realizado. Você receberá a próxima feira da semana.");
     const button = e.currentTarget.querySelector("button");
-    button.innerHTML = '<i data-lucide="check"></i>';
-    lucide.createIcons();
+    button.disabled = true;
+    try {
+      const data = await api("api/newsletter.php", {method:"POST", body:JSON.stringify({email, company:e.currentTarget.company.value})});
+      e.currentTarget.reset();
+      status(data.message);
+      button.innerHTML = '<i data-lucide="check"></i>';
+    } catch(error) {
+      status(error.message);
+      alert(error.message);
+    } finally {
+      button.disabled = false;
+      lucide.createIcons();
+    }
   });
   
-  document.addEventListener("submit", e => {
+  document.addEventListener("submit", async e => {
     if(e.target.id !== "checkout-form") return;
     e.preventDefault();
     const form = new FormData(e.target);
@@ -277,15 +290,29 @@ const products = [
       alert("Confira os dados de entrega antes de continuar.");
       return;
     }
-    const total = subtotal() + (subtotal() >= 120 ? 0 : 9.9);
-    state.receipt = {code:makeCode(), total, paymentMethod:form.get("paymentMethod")};
-    state.checkoutStep = "success";
-    renderCart();
-    status(`Pedido ${state.receipt.code} registrado com sucesso.`);
+    const submitButton = e.target.querySelector('[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = "Salvando pedido...";
+    try {
+      const data = await api("api/orders.php", {method:"POST", body:JSON.stringify({
+        customer:{name,email,phone,region:form.get("deliveryRegion"),address},
+        paymentMethod:form.get("paymentMethod"),
+        items:cartItems().map(p => ({productId:p.id, quantity:Number(state.cart[p.id])}))
+      })});
+      state.receipt = data.order;
+      state.checkoutStep = "success";
+      renderCart();
+      status(`Pedido ${state.receipt.code} registrado com sucesso.`);
+    } catch(error) {
+      alert(error.message);
+      status(error.message);
+      submitButton.disabled = false;
+      submitButton.textContent = "Reservar pedido";
+    }
   });
   
   lucide.createIcons();
   renderCategories();
-  renderProducts();
+  loadProducts();
   renderCartCount();
   

@@ -124,6 +124,12 @@ img {
   letter-spacing: -0.055em;
 }
 
+.brand img {
+  height:80px;
+  width:210px;
+
+}
+
 .brand-leaf {
   position: absolute;
   top: -2px;
