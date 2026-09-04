@@ -609,6 +609,13 @@ img {
   margin-top: 24px;
 }
 
+.load-more-wrap {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
 .product-badge {
   position: absolute;
   top: 16px;
