@@ -310,6 +310,23 @@ let products = [];
       submitButton.textContent = "Reservar pedido";
     }
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnCarregar = document.getElementById("btn-carregar-mais");
+    const quantidadePorClique = 3;
+  
+    if (btnCarregar) {
+      btnCarregar.addEventListener("click", () => {
+        const produtosOcultos = document.querySelectorAll(".produto-oculto");
+        for (let i = 0; i < quantidadePorClique && i < produtosOcultos.length; i++) {
+          produtosOcultos[i].classList.remove("produto-oculto");
+        }
+        if (document.querySelectorAll(".produto-oculto").length === 0) {
+          btnCarregar.style.display = "none";
+        }
+      });
+    }
+  });
   
   lucide.createIcons();
   renderCategories();

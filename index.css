@@ -600,6 +600,15 @@ img {
   scale: 1.035;
 }
 
+.produto-oculto {
+  display: none;
+}
+#btn-carregar-mais {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 24px;
+}
+
 .product-badge {
   position: absolute;
   top: 16px;
