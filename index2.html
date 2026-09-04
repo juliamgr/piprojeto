@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pontos de retirada em Porto Alegre — Agrolink</title>
+  <meta name="description" content="Encontre feiras e pontos de retirada de cestas orgânicas da Agrolink em Porto Alegre. Consulte horários, endereços e como funciona a retirada.">
+  <meta name="theme-color" content="#073f2a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="index2.css">
+</head>
+<body>
+  <a class="skip-link" href="#mapa-feiras">Ir para o mapa</a>
+
+  <div class="delivery-strip">
+    <span class="delivery-strip-dot" aria-hidden="true"></span>
+    Retirada sem taxa em pontos selecionados de Porto Alegre
+  </div>
+
+  <header class="site-header" id="inicio">
+    <a class="brand" href="#inicio" aria-label="Agrolink — início">
+      Agrolink<span class="brand-leaf" aria-hidden="true"></span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+      <a class="is-active" href="#mapa-feiras">Pontos de retirada</a>
+      <a href="#como-retirar">Como retirar</a>
+      <a href="#duvidas">Dúvidas</a>
+    </nav>
+
+    <div class="header-actions">
+      <span class="city-pill"><i data-lucide="map-pin" aria-hidden="true"></i> Porto Alegre</span>
+      <button class="menu-button" id="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+        <i data-lucide="menu" aria-hidden="true"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro section-shell" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><i data-lucide="map" aria-hidden="true"></i> Da lavoura ao seu bairro</p>
+        <h1 id="page-title">Sua cesta fresca,<br><em>no caminho de casa.</em></h1>
+        <p>Escolha uma feira próxima, confirme o ponto no seu pedido e retire os produtos já separados pela nossa equipe.</p>
+      </div>
+
+      <div class="intro-summary" aria-label="Resumo da rede de retirada">
+        <div><strong>8</strong><span>pontos na cidade</span></div>
+        <div><strong>3</strong><span>dias de retirada</span></div>
+        <div><strong>R$ 0</strong><span>de taxa</span></div>
+      </div>
+    </section>
+
+    <section class="map-section" id="mapa-feiras" aria-labelledby="map-title">
+      <div class="section-shell">
+        <div class="section-heading map-heading">
+          <div>
+            <p class="eyebrow"><i data-lucide="navigation" aria-hidden="true"></i> Encontre seu ponto</p>
+            <h2 id="map-title">Feiras perto de você.</h2>
+          </div>
+          <p>Consulte os dias e horários e escolha onde sua cesta estará esperando por você.</p>
+        </div>
+
+        <div class="map-tools" aria-label="Filtros dos pontos de retirada">
+          <label class="search-field" for="location-search">
+            <i data-lucide="search" aria-hidden="true"></i>
+            <span class="sr-only">Buscar bairro, feira ou endereço</span>
+            <input id="location-search" type="search" placeholder="Buscar bairro ou feira" autocomplete="off">
+          </label>
+
+          <div class="day-filters" id="day-filters" aria-label="Filtrar por dia">
+            <button class="filter-button is-active" type="button" data-day="todos" aria-pressed="true">Todos</button>
+            <button class="filter-button" type="button" data-day="terça" aria-pressed="false">Terça</button>
+            <button class="filter-button" type="button" data-day="quinta" aria-pressed="false">Quinta</button>
+            <button class="filter-button" type="button" data-day="sábado" aria-pressed="false">Sábado</button>
+          </div>
+
+          <button class="near-me-button" id="near-me" type="button">
+            <i data-lucide="locate-fixed" aria-hidden="true"></i>
+            Perto de mim
+          </button>
+        </div>
+
+        <div class="map-board">
+          <aside class="location-panel" aria-label="Lista de pontos de retirada">
+            <div class="panel-topline">
+              <span id="results-count">8 pontos encontrados</span>
+              <button id="clear-filters" type="button" hidden>Limpar filtros</button>
+            </div>
+            <div class="location-list" id="location-list"></div>
+            <div class="empty-state" id="empty-state" hidden>
+              <i data-lucide="map-pin-off" aria-hidden="true"></i>
+              <h3>Nenhum ponto encontrado</h3>
+              <p>Tente outro bairro ou veja todos os dias.</p>
+              <button class="text-button" type="button" id="empty-clear">Mostrar todos</button>
+            </div>
+          </aside>
+
+          <div class="map-wrap">
+            <div id="map" role="region" aria-label="Mapa interativo com os pontos de retirada da Agrolink em Porto Alegre"></div>
+            <button class="map-reset" id="map-reset" type="button" aria-label="Mostrar todos os pontos no mapa" title="Mostrar todos os pontos">
+              <i data-lucide="maximize" aria-hidden="true"></i>
+            </button>
+            <div class="map-key" aria-hidden="true"><span></span> Ponto de retirada Agrolink</div>
+            <noscript><p class="map-fallback">Ative o JavaScript para usar o mapa. Todos os endereços continuam disponíveis na lista.</p></noscript>
+          </div>
+        </div>
+
+        <p class="data-note">
+          <i data-lucide="info" aria-hidden="true"></i>
+          Horários das feiras atualizados em junho de 2026. A retirada da Agrolink deve ser confirmada no pedido.
+          <a href="https://prefeitura.poa.br/carta-de-servicos/feiras-ecologicas" target="_blank" rel="noopener noreferrer">Consultar fonte oficial</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="how-section" id="como-retirar" aria-labelledby="how-title">
+      <div class="section-shell">
+        <div class="section-heading how-heading">
+          <div>
+            <p class="eyebrow"><i data-lucide="shopping-basket" aria-hidden="true"></i> Retirada Agrolink</p>
+            <h2 id="how-title">Você escolhe. A gente separa.</h2>
+          </div>
+          <p>O pedido sai das famílias produtoras já organizado por ponto, reduzindo trajetos, embalagens e desperdício.</p>
+        </div>
+
+        <ol class="steps-grid">
+          <li>
+            <span class="step-number">01</span>
+            <span class="step-icon"><i data-lucide="carrot" aria-hidden="true"></i></span>
+            <h3>Monte sua cesta</h3>
+            <p>Escolha os alimentos disponíveis na feira da semana e finalize o pedido.</p>
+          </li>
+          <li>
+            <span class="step-number">02</span>
+            <span class="step-icon"><i data-lucide="map-pinned" aria-hidden="true"></i></span>
+            <h3>Selecione o ponto</h3>
+            <p>Marque a feira e a janela de horário mais conveniente para a retirada.</p>
+          </li>
+          <li>
+            <span class="step-number">03</span>
+            <span class="step-icon"><i data-lucide="message-circle-check" aria-hidden="true"></i></span>
+            <h3>Receba a confirmação</h3>
+            <p>Enviamos o número do pedido e o aviso de que a cesta está pronta.</p>
+          </li>
+          <li>
+            <span class="step-number">04</span>
+            <span class="step-icon"><i data-lucide="package-check" aria-hidden="true"></i></span>
+            <h3>Retire sem fila</h3>
+            <p>Informe seu nome ou código no balcão Agrolink e leve sua ecobag.</p>
+          </li>
+        </ol>
+
+        <div class="pickup-promise">
+          <div class="promise-image">
+            <img src="assets/retirada-agrolink.webp" alt="Cesta reutilizável e caixa com verduras frescas em uma feira ao ar livre">
+            <span><i data-lucide="leaf" aria-hidden="true"></i> Colheita da semana</span>
+          </div>
+          <div class="promise-copy">
+            <p class="eyebrow"><i data-lucide="check-check" aria-hidden="true"></i> No dia da retirada</p>
+            <h2>Frescor preservado até chegar a você.</h2>
+            <ul>
+              <li><i data-lucide="snowflake" aria-hidden="true"></i><span><strong>Armazenamento adequado</strong>Itens refrigerados ficam em caixas térmicas até a retirada.</span></li>
+              <li><i data-lucide="package-open" aria-hidden="true"></i><span><strong>Pedido já conferido</strong>Sua cesta é separada e identificada antes de chegar ao ponto.</span></li>
+              <li><i data-lucide="shopping-bag" aria-hidden="true"></i><span><strong>Menos embalagem</strong>Você pode levar sua própria sacola ou caixa retornável.</span></li>
+            </ul>
+            <p class="promise-note"><i data-lucide="clock-3" aria-hidden="true"></i> Chegue dentro do horário escolhido. Se houver um imprevisto, fale com a equipe antes do encerramento da feira.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section" id="duvidas" aria-labelledby="faq-title">
+      <div class="section-shell faq-layout">
+        <div class="faq-intro">
+          <p class="eyebrow"><i data-lucide="circle-help" aria-hidden="true"></i> Dúvidas frequentes</p>
+          <h2 id="faq-title">Antes de buscar sua cesta.</h2>
+          <p>As informações de retirada também aparecem na confirmação de cada pedido.</p>
+          <a class="support-link" href="mailto:oi@agrolink.com.br"><i data-lucide="mail" aria-hidden="true"></i> oi@agrolink.com.br</a>
+        </div>
+
+        <div class="faq-list">
+          <details open>
+            <summary>Posso retirar sem fazer um pedido antes?<i data-lucide="plus" aria-hidden="true"></i></summary>
+            <p>As feiras vendem produtos normalmente, mas a cesta Agrolink precisa ser encomendada para garantirmos todos os itens escolhidos.</p>
+          </details>
+          <details>
+            <summary>Outra pessoa pode retirar por mim?<i data-lucide="plus" aria-hidden="true"></i></summary>
+            <p>Sim. Basta compartilhar com ela o nome e o número do pedido enviados na confirmação.</p>
+          </details>
+          <details>
+            <summary>O que acontece se eu perder o horário?<i data-lucide="plus" aria-hidden="true"></i></summary>
+            <p>Entre em contato antes do encerramento do ponto. A equipe verificará se é possível redirecionar a cesta ou combinar outra solução.</p>
+          </details>
+          <details>
+            <summary>A retirada tem algum custo?<i data-lucide="plus" aria-hidden="true"></i></summary>
+            <p>Não. Nos pontos identificados no mapa, a retirada é gratuita; você paga somente os produtos do pedido.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" aria-label="Chamada para escolher um ponto">
+      <div class="section-shell final-cta-inner">
+        <div>
+          <p class="eyebrow light"><i data-lucide="sprout" aria-hidden="true"></i> Mais perto, mais fresco</p>
+          <h2>Encontre a feira que cabe na sua rotina.</h2>
+        </div>
+        <a class="button button-light" href="#mapa-feiras">Ver pontos no mapa <i data-lucide="arrow-up" aria-hidden="true"></i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main section-shell">
+      <div class="footer-brand">
+        <a class="brand brand-light" href="#inicio">Agrolink<span class="brand-leaf" aria-hidden="true"></span></a>
+        <p>Alimento orgânico, origem próxima e relações mais justas no Rio Grande do Sul.</p>
+      </div>
+      <div>
+        <h3>Retirada</h3>
+        <a href="#mapa-feiras">Mapa das feiras</a>
+        <a href="#como-retirar">Como funciona</a>
+        <a href="#duvidas">Dúvidas frequentes</a>
+      </div>
+      <div>
+        <h3>Atendimento</h3>
+        <a href="mailto:oi@agrolink.com.br">oi@agrolink.com.br</a>
+        <span>Seg–sex, 8h às 18h</span>
+        <span>Porto Alegre, RS</span>
+      </div>
+      <div class="certification">
+        <i data-lucide="shield-check" aria-hidden="true"></i>
+        <span><strong>Rede verificada</strong>Origem e manejo conferidos.</span>
+      </div>
+    </div>
+    <div class="footer-bottom section-shell">
+      <span>© 2026 Agrolink. Feito no Rio Grande do Sul.</span>
+      <span>Alimento bom percorre caminhos mais curtos.</span>
+    </div>
+  </footer>
+
+  <div class="sr-status" id="status" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="index2.js"></script>
+</body>
+</html>

@@ -127,18 +127,6 @@ img {
 .brand img {
   height:80px;
   width:250px;
-
-}
-
-.brand-leaf {
-  position: absolute;
-  top: -2px;
-  right: 17px;
-  width: 14px;
-  height: 23px;
-  border-radius: 100% 0 100% 0;
-  background: var(--lime);
-  rotate: 32deg;
 }
 
 .main-nav {
