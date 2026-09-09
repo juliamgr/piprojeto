@@ -12,6 +12,8 @@ let products = [];
   const money = value => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(value);
   const $ = selector => document.querySelector(selector);
   const $$ = selector => [...document.querySelectorAll(selector)];
+  let cepSearchTimer = null;
+  let cepRequestController = null;
   
   function saveCart(){ localStorage.setItem("agrolink-cart", JSON.stringify(state.cart)); }
   function status(message){ $("#status").textContent = message; }
@@ -154,7 +156,6 @@ let products = [];
       return;
     }
   
-    $("#cart-kicker").textContent = "Sua compra";
     $("#cart-title").textContent = "Sacola da feira";
   
     if(!items.length){
