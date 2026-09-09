@@ -7,7 +7,8 @@ const state = {
   cart: JSON.parse(localStorage.getItem("agrolink-cart") || "{}"),
   checkoutStep: "cart",
   receipt: null,
-  visibleCount: 3
+  visibleCount: 3,
+  user: null
 };
 
 const money = value => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(value);
@@ -212,6 +213,64 @@ async function api(url, options = {}){
   return data;
 }
 
+function initials(name){
+  return name.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join("").toUpperCase();
+}
+
+function renderAuthUI(){
+  const button = $("#auth-button");
+  const label = button.querySelector(".auth-button-label");
+  const menu = $("#profile-menu");
+
+  if(state.user){
+    button.classList.add("is-logged-in");
+    label.textContent = state.user.name.split(" ")[0];
+    $("#profile-avatar").textContent = initials(state.user.name);
+    $("#profile-name").textContent = state.user.name;
+    $("#profile-email").textContent = state.user.email;
+  } else {
+    button.classList.remove("is-logged-in");
+    label.textContent = "Entrar";
+    button.setAttribute("aria-expanded", "false");
+    menu.hidden = true;
+  }
+}
+
+async function checkSession(){
+  try {
+    const data = await api("api/me.php");
+    state.user = data.user;
+  } catch (error) {
+    state.user = null;
+  }
+  renderAuthUI();
+}
+
+function openAuth(tab = "login"){
+  switchAuthTab(tab);
+  $("#auth-layer").hidden = false;
+  document.body.style.overflow = "hidden"; document.documentElement.style.overflow = "hidden";
+}
+
+function closeAuth(){
+  $("#auth-layer").hidden = true;
+  document.body.style.overflow = ""; document.documentElement.style.overflow = "";
+  $("#login-error").hidden = true;
+  $("#register-error").hidden = true;
+}
+
+function switchAuthTab(tab){
+  const isLogin = tab === "login";
+  $$("[data-auth-tab]").forEach(btn => {
+    const active = btn.dataset.authTab === tab;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-selected", active);
+  });
+  $("#login-form").hidden = !isLogin;
+  $("#register-form").hidden = isLogin;
+  $("#auth-title").textContent = isLogin ? "Bem-vindo de volta" : "Crie sua conta";
+}
+
 async function loadProducts(){
   $("#product-grid").innerHTML = `<p class="catalog-message">Carregando a feira...</p>`;
   try {
@@ -219,7 +278,7 @@ async function loadProducts(){
     products = data.products;
     renderProducts();
   } catch (error) {
-    $("#product-grid").innerHTML = `<p class="catalog-message">${error.message} Abra o projeto pelo Apache do XAMPP.</p>`;
+    $("#product-grid").innerHTML = `<p class="catalog-message">${error.message}</p>`;
   }
 }
 
@@ -232,6 +291,25 @@ document.addEventListener("click", e => {
     renderProducts();
   }
 
+  if(target.id === "auth-button"){
+    if(state.user){
+      const menu = $("#profile-menu");
+      const isOpen = !menu.hidden;
+      menu.hidden = isOpen;
+      target.setAttribute("aria-expanded", String(!isOpen));
+    } else {
+      openAuth("login");
+    }
+  }
+  if(target.id === "auth-backdrop" || target.id === "auth-close") closeAuth();
+  if(target.dataset.authTab) switchAuthTab(target.dataset.authTab);
+  if(target.id === "profile-logout"){
+    api("api/logout.php", {method:"POST"}).catch(()=>{}).finally(()=>{
+      state.user = null;
+      renderAuthUI();
+      status("Você saiu da sua conta.");
+    });
+  }
   if(target.id === "open-cart") openCart();
   if(target.id === "close-cart" || target.id === "cart-backdrop") closeCart();
   if(target.id === "buy-now" || target.id === "impact-buy"){
@@ -270,6 +348,70 @@ document.addEventListener("click", e => {
   if(target.dataset.cartPlus) changeCart(Number(target.dataset.cartPlus), 1);
   if(target.dataset.remove){
     delete state.cart[target.dataset.remove]; saveCart(); renderProducts(); renderCartCount(); renderCart();
+  }
+});
+
+document.addEventListener("click", e => {
+  const menu = $("#profile-menu");
+  if(!menu || menu.hidden) return;
+  if(!e.target.closest(".auth-wrap")) menu.hidden = true;
+});
+
+$("#login-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  const errorEl = $("#login-error");
+  errorEl.hidden = true;
+  const button = e.target.querySelector(".auth-submit");
+  button.disabled = true;
+  try {
+    const data = await api("api/login.php", {method:"POST", body: JSON.stringify({
+      email: form.get("email"),
+      password: form.get("password")
+    })});
+    state.user = data.user;
+    renderAuthUI();
+    closeAuth();
+    e.target.reset();
+    status(`Bem-vindo, ${state.user.name.split(" ")[0]}.`);
+  } catch(error){
+    errorEl.textContent = error.message;
+    errorEl.hidden = false;
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$("#register-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  const errorEl = $("#register-error");
+  errorEl.hidden = true;
+  if(form.get("password") !== form.get("passwordConfirm")){
+    errorEl.textContent = "As senhas não coincidem.";
+    errorEl.hidden = false;
+    return;
+  }
+  const button = e.target.querySelector(".auth-submit");
+  button.disabled = true;
+  try {
+    const data = await api("api/register.php", {method:"POST", body: JSON.stringify({
+      name: form.get("name"),
+      email: form.get("email"),
+      phone: form.get("phone"),
+      password: form.get("password"),
+      passwordConfirm: form.get("passwordConfirm")
+    })});
+    state.user = data.user;
+    renderAuthUI();
+    closeAuth();
+    e.target.reset();
+    status(`Conta criada. Bem-vindo, ${state.user.name.split(" ")[0]}.`);
+  } catch(error){
+    errorEl.textContent = error.message;
+    errorEl.hidden = false;
+  } finally {
+    button.disabled = false;
   }
 });
 
@@ -336,3 +478,4 @@ lucide.createIcons();
 renderCategories();
 loadProducts();
 renderCartCount();
+checkSession();
