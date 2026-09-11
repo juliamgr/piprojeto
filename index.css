@@ -1689,7 +1689,8 @@ img {
 
   .hero {
     padding-block: 56px 42px;
-    grid-template-columns: 1fr;
+    /* keep two columns so the H1 stays beside the hero image on narrower screens */
+    grid-template-columns: 1fr 1fr;
   }
 
   .hero-copy {
