@@ -200,7 +200,7 @@ img { display: block; max-width: 100%; }
 
 .intro {
   min-height: 390px;
-  padding-block: 64px 55px;
+  padding-block: 14px 15px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
@@ -225,23 +225,36 @@ img { display: block; max-width: 100%; }
   color: #8fb52c;
 }
 
-.intro h1,
-.section-heading h2,
-.promise-copy h2,
-.faq-intro h2,
-.final-cta h2 {
-  margin: 0;
+.intro h1 {
+  margin: 112px;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.045em;
   line-height: 0.98;
 }
 
-.intro h1 { font-size: clamp(54px, 6vw, 82px); }
-.intro h1 em { color: var(--rust); font-weight: 500; }
+.section-heading h2,
+.promise-copy h2,
+.faq-intro h2,
+.final-cta h2 {
+  margin: 0px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.intro h1 {
+   font-size: clamp(50px, 6vw, 78px);
+ }
+
+.intro h1 em {
+   color: var(--rust); 
+   font-weight: 500;
+   }
 
 .intro-copy > p:last-child {
-  max-width: 670px;
+  max-width: 620px;
   margin: 24px 0 0;
   color: #345247;
   font-size: 18px;
@@ -251,19 +264,29 @@ img { display: block; max-width: 100%; }
   min-width: 360px;
   padding: 25px 0;
   display: grid;
+  align-items: center;
   grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
 
 .intro-summary div {
-  padding-inline: 24px;
+  padding-inline: 21px;
   display: flex;
   flex-direction: column;
 }
 
-.intro-summary div + div { border-left: 1px solid var(--line); }
-.intro-summary strong { font-family: "Cormorant Garamond", Georgia, serif; font-size: 35px; line-height: 1; }
+.intro-summary div + div { 
+  border-left: 1px solid var(--line); 
+}
+
+.intro-summary strong { 
+  font-family: "Cormorant Garamond",
+  Georgia, serif;
+  font-size: 35px;
+  line-height: 1; 
+  }
+
 .intro-summary span { margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.35; }
 
 .map-section {
@@ -280,7 +303,9 @@ img { display: block; max-width: 100%; }
   gap: 42px;
 }
 
-.section-heading h2 { font-size: clamp(45px, 4.8vw, 65px); }
+.section-heading h2 {
+   font-size: clamp(45px, 4.8vw, 65px); 
+  }
 
 .section-heading > p {
   max-width: 470px;
