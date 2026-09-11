@@ -94,6 +94,126 @@ const pickupPoints = [
     schedule: "Quinta, 7h30 às 15h",
     lat: -30.03195,
     lng: -51.23018
+  },
+  {
+    id: 9,
+    name: "Feira Modelo Epatur",
+    shortName: "Feira Modelo Epatur",
+    neighborhood: "Cidade Baixa",
+    region: "Centro",
+    address: "Largo Zumbi dos Palmares",
+    day: "terça",
+    schedule: "Terça, 15h30 às 20h30",
+    lat: -30.0382046,
+    lng: -51.2263062
+  },
+  {
+    id: 10,
+    name: "Feira Modelo General João Telles",
+    shortName: "Feira Gen. João Telles",
+    neighborhood: "Bom Fim",
+    region: "Centro",
+    address: "R. General João Telles, entre Osvaldo Aranha e Henrique Dias",
+    day: "terça",
+    schedule: "Terça, 7h às 12h",
+    lat: -30.0305695,
+    lng: -51.2121381
+  },
+  {
+    id: 11,
+    name: "Feira Modelo Praça Florida",
+    shortName: "Feira da Praça Florida",
+    neighborhood: "Floresta",
+    region: "Centro",
+    address: "R. São Carlos × R. Comendador Azevedo",
+    day: "terça",
+    schedule: "Terça, 15h30 às 20h30",
+    lat: -30.0206212,
+    lng: -51.2103979
+  },
+  {
+    id: 12,
+    name: "Feira Encol",
+    shortName: "Feira da Encol",
+    neighborhood: "Bela Vista",
+    region: "Centro",
+    address: "Praça Carlos Simão Arnt, entre Nilópolis e Passo da Pátria",
+    day: "quarta",
+    schedule: "Quarta, 15h às 20h",
+    lat: -30.0361919,
+    lng: -51.1874856
+  },
+  {
+    id: 13,
+    name: "Feira Modelo Germânia",
+    shortName: "Feira Germânia",
+    neighborhood: "Jardim Europa",
+    region: "Norte",
+    address: "Av. Ferdinand Kisslinger, junto ao Parque Germânia",
+    day: "quinta",
+    schedule: "Quinta, 14h às 20h",
+    lat: -30.0272652,
+    lng: -51.1552056
+  },
+  {
+    id: 14,
+    name: "Feira Modelo Menino Deus",
+    shortName: "Feira Menino Deus",
+    neighborhood: "Menino Deus",
+    region: "Centro",
+    address: "Praça Israel — R. Vicente Lopes Santos",
+    day: "quinta",
+    schedule: "Quinta, 15h30 às 20h30",
+    lat: -30.0528892,
+    lng: -51.2262949
+  },
+  {
+    id: 15,
+    name: "Feira Modelo Jardim Botânico",
+    shortName: "Feira Jardim Botânico",
+    neighborhood: "Jardim Botânico",
+    region: "Leste",
+    address: "R. Felizardo Furtado, ao lado da ESEF",
+    day: "sexta",
+    schedule: "Sexta, 15h30 às 20h30",
+    lat: -30.0495823,
+    lng: -51.1838723
+  },
+  {
+    id: 16,
+    name: "Feira Modelo Vila Nova",
+    shortName: "Feira Vila Nova",
+    neighborhood: "Vila Nova",
+    region: "Sul",
+    address: "R. Coronel Otaviano Pinto Soares × R. Joaquim de Carvalho",
+    day: "sábado",
+    schedule: "Sábado, 7h30 às 12h30",
+    lat: -30.1151304,
+    lng: -51.2196464
+  },
+  {
+    id: 17,
+    name: "Mercadão Moinhos de Vento",
+    shortName: "Mercadão Moinhos de Vento",
+    neighborhood: "Moinhos de Vento",
+    region: "Centro",
+    address: "R. Comendador Caminha, 313 — Largo José Antonio Daudt",
+    day: "quinta",
+    schedule: "Quinta, 15h30 às 20h30",
+    lat: -30.0262322,
+    lng: -51.2012349
+  },
+  {
+    id: 18,
+    name: "Mercadão Cidade Baixa",
+    shortName: "Mercadão Cidade Baixa",
+    neighborhood: "Cidade Baixa",
+    region: "Centro",
+    address: "Av. Loureiro da Silva — Largo Zumbi dos Palmares",
+    day: "sábado",
+    schedule: "Sábado, 7h às 12h",
+    lat: -30.0382046,
+    lng: -51.2263062
   }
 ];
 
@@ -445,3 +565,126 @@ document.addEventListener("keydown", (event) => {
 initializeMap();
 renderLocations();
 if (window.lucide) lucide.createIcons();
+(() => {
+  function iniciarCarrosselFeiras() {
+    const carrossel = document.querySelector(".agro-galeria");
+    if (!carrossel || carrossel.dataset.iniciado) return;
+
+    const fotos = [...carrossel.querySelectorAll(".agro-foto")];
+    if (!fotos.length) return;
+
+    carrossel.dataset.iniciado = "true";
+
+    const controles = carrossel.querySelector(".agro-galeria-controles");
+    const anterior = carrossel.querySelector("[data-agro-anterior]");
+    const proxima = carrossel.querySelector("[data-agro-proxima]");
+    const pausa = carrossel.querySelector("[data-agro-pausa]");
+    const contagem = carrossel.querySelector(".agro-galeria-contagem");
+    const status = carrossel.querySelector("[data-agro-status]");
+    const movimentoReduzido = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+    let atual = 0;
+    let temporizador;
+    let pausado = movimentoReduzido.matches;
+    let mouseDentro = false;
+
+    const formatar = (numero) => String(numero).padStart(2, "0");
+
+    function mostrarFoto(indice, anunciar = false) {
+      atual = (indice + fotos.length) % fotos.length;
+
+      fotos.forEach((foto, i) => {
+        const ativa = i === atual;
+
+        foto.classList.toggle("is-active", ativa);
+        foto.setAttribute("aria-hidden", String(!ativa));
+        foto.setAttribute("aria-label", `${i + 1} de ${fotos.length}`);
+      });
+
+      contagem.textContent =
+        `${formatar(atual + 1)} / ${formatar(fotos.length)}`;
+
+      if (anunciar) {
+        const legenda = fotos[atual].querySelector("figcaption strong");
+        status.textContent =
+          `Foto ${atual + 1} de ${fotos.length}. ${legenda?.textContent ?? ""}`;
+      }
+    }
+
+    function atualizarReproducao() {
+      window.clearInterval(temporizador);
+
+      pausa.textContent = pausado ? "Reproduzir" : "Pausar";
+      pausa.setAttribute(
+        "aria-label",
+        pausado ? "Reproduzir carrossel" : "Pausar carrossel"
+      );
+
+      if (
+        fotos.length < 2 ||
+        pausado ||
+        mouseDentro ||
+        document.hidden ||
+        carrossel.contains(document.activeElement)
+      ) return;
+
+      temporizador = window.setInterval(() => {
+        mostrarFoto(atual + 1);
+      }, 5000);
+    }
+
+    function navegar(direcao) {
+      mostrarFoto(atual + direcao, true);
+      atualizarReproducao();
+    }
+
+    anterior.addEventListener("click", () => navegar(-1));
+    proxima.addEventListener("click", () => navegar(1));
+
+    pausa.addEventListener("click", () => {
+      pausado = !pausado;
+      atualizarReproducao();
+    });
+
+    carrossel.addEventListener("mouseenter", () => {
+      mouseDentro = true;
+      atualizarReproducao();
+    });
+
+    carrossel.addEventListener("mouseleave", () => {
+      mouseDentro = false;
+      atualizarReproducao();
+    });
+
+    carrossel.addEventListener("focusin", atualizarReproducao);
+    carrossel.addEventListener("focusout", () => {
+      window.setTimeout(atualizarReproducao, 0);
+    });
+
+    carrossel.addEventListener("keydown", (evento) => {
+      if (evento.key === "ArrowLeft" || evento.key === "ArrowRight") {
+        evento.preventDefault();
+        navegar(evento.key === "ArrowLeft" ? -1 : 1);
+      }
+    });
+
+    document.addEventListener("visibilitychange", atualizarReproducao);
+
+    movimentoReduzido.addEventListener("change", (evento) => {
+      pausado = evento.matches;
+      atualizarReproducao();
+    });
+
+    controles.hidden = fotos.length < 2;
+    mostrarFoto(0);
+    atualizarReproducao();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", iniciarCarrosselFeiras);
+  } else {
+    iniciarCarrosselFeiras();
+  }
+})();
