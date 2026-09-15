@@ -263,6 +263,7 @@ img { display: block; max-width: 100%; }
 }
 
 .intro-summary {
+  position:relative;
   min-width: 360px;
   padding: 25px 0;
   display: grid;
