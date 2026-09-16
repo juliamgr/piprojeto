@@ -1,1 +1,34 @@
-[]
+[
+    {
+        "code": "AGR-260916-FCA158",
+        "createdAt": "2026-09-16T12:54:52+00:00",
+        "status": "received",
+        "customer": {
+            "name": "Júlia",
+            "email": "juliagregis9@gmail.com",
+            "phone": "51981326110",
+            "region": "Porto Alegre",
+            "address": "effeb, njej 213"
+        },
+        "paymentMethod": "delivery",
+        "items": [
+            {
+                "productId": 2,
+                "name": "Morango orgânico",
+                "unitPrice": 12.9,
+                "quantity": 1,
+                "lineTotal": 12.9
+            },
+            {
+                "productId": 3,
+                "name": "Alface crespa",
+                "unitPrice": 6.9,
+                "quantity": 1,
+                "lineTotal": 6.9
+            }
+        ],
+        "subtotal": 19.8,
+        "shipping": 9.9,
+        "total": 29.7
+    }
+]

@@ -1,6 +1,6 @@
 let products = [];
   
-const categories = ["Todos","Cestas","Folhas","Frutas","Legumes"];
+const categories = ["Todos","Favoritos","Cestas","Folhas","Frutas","Legumes", "Temperos", "Tubérculo"];
 const state = {
   category: "Todos",
   search: "",
@@ -8,7 +8,8 @@ const state = {
   checkoutStep: "cart",
   receipt: null,
   visibleCount: 3,
-  user: null
+  user: null,
+  favorites: []
 };
 
 const money = value => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(value);
@@ -62,13 +63,22 @@ function changeCart(id, amount){
 function renderProducts(){
   const query = state.search.trim().toLocaleLowerCase("pt-BR");
   const filtered = products.filter(p => {
-    const categoryOk = state.category === "Todos" || p.category === state.category;
+    const categoryOk =
+      state.category === "Todos" ? true :
+      state.category === "Favoritos" ? state.favorites.includes(p.id) :
+      p.category === state.category;
     const text = [p.name,p.producer,p.location,p.category].join(" ").toLocaleLowerCase("pt-BR");
     return categoryOk && (!query || text.includes(query));
   });
 
   if(!filtered.length) {
-    $("#product-grid").innerHTML = `<p class="catalog-message">Nenhum produto encontrado.</p>`;
+    let mensagem = "Nenhum produto encontrado.";
+    if(state.category === "Favoritos"){
+      mensagem = state.user
+        ? "Você ainda não favoritou nenhum produto. Toque no coração de um item da feira."
+        : "Entre na sua conta para ver seus produtos favoritos.";
+    }
+    $("#product-grid").innerHTML = `<p class="catalog-message">${mensagem}</p>`;
     return;
   }
 
@@ -76,12 +86,13 @@ function renderProducts(){
 
   let html = visibleProducts.map(p => {
     const qty = Number(state.cart[p.id] || 0);
+    const isFav = state.favorites.includes(p.id);
     return `
       <article class="product-card">
         <div class="product-image-wrap">
           <img src="${p.image}" alt="" class="product-image" style="object-position:${p.imagePosition}">
           ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ""}
-          <button class="favorite-button" type="button" aria-label="Favoritar ${p.name}"><i data-lucide="heart"></i></button>
+          <button class="favorite-button${isFav?" is-active":""}" type="button" data-favorite="${p.id}" aria-pressed="${isFav}" aria-label="${isFav?"Desfavoritar":"Favoritar"} ${p.name}"><i data-lucide="heart"${isFav?' fill="currentColor"':""}></i></button>
         </div>
         <div class="product-info">
           <p class="product-category">${p.category}</p>
@@ -208,7 +219,14 @@ function renderCart(){
 
 async function api(url, options = {}){
   const response = await fetch(url, {headers:{"Content-Type":"application/json"}, ...options});
-  const data = await response.json().catch(() => ({}));
+  const raw = await response.text();
+  let data = {};
+  try {
+    data = raw ? JSON.parse(raw) : {};
+  } catch (parseError) {
+    console.error(`Resposta de ${url} não é JSON válido (provável erro/aviso do PHP antes do JSON):`, raw);
+    throw new Error("O servidor respondeu em um formato inesperado. Veja o console para detalhes.");
+  }
   if(!response.ok) throw new Error(data.message || "Não foi possível concluir a solicitação.");
   return data;
 }
@@ -236,14 +254,50 @@ function renderAuthUI(){
   }
 }
 
+async function loadFavorites(){
+  if(!state.user){
+    state.favorites = [];
+    renderProducts();
+    return;
+  }
+  try {
+    const data = await api("api/favoritos.php");
+    state.favorites = data.favorites || [];
+  } catch (error) {
+    state.favorites = [];
+  }
+  renderProducts();
+}
+
+async function toggleFavorite(productId){
+  if(!state.user){
+    openAuth("login");
+    status("Entre na sua conta para favoritar produtos.");
+    return;
+  }
+  const product = products.find(p => p.id === productId);
+  try {
+    const data = await api("api/favoritos.php", {method:"POST", body: JSON.stringify({productId})});
+    state.favorites = data.favorites || [];
+    renderProducts();
+    status(data.favorited
+      ? `${product ? product.name : "Produto"} adicionado aos favoritos.`
+      : `${product ? product.name : "Produto"} removido dos favoritos.`);
+  } catch (error) {
+    status(error.message);
+    alert(error.message);
+  }
+}
+
 async function checkSession(){
   try {
-    const data = await api("api/me.php");
+    const data = await api("api/usuario.php");
     state.user = data.user;
   } catch (error) {
     state.user = null;
   }
   renderAuthUI();
+  loadFavorites();
 }
 
 function openAuth(tab = "login"){
@@ -278,7 +332,7 @@ async function loadProducts(){
     products = data.products;
     renderProducts();
   } catch (error) {
-    $("#product-grid").innerHTML = `<p class="catalog-message">${error.message}</p>`;
+    $("#product-grid").innerHTML = `<p class="catalog-message">${error.message} Abra o projeto pelo Apache do XAMPP.</p>`;
   }
 }
 
@@ -306,10 +360,15 @@ document.addEventListener("click", e => {
   if(target.id === "profile-logout"){
     api("api/logout.php", {method:"POST"}).catch(()=>{}).finally(()=>{
       state.user = null;
+      state.favorites = [];
+      if(state.category === "Favoritos") state.category = "Todos";
       renderAuthUI();
+      renderCategories();
+      renderProducts();
       status("Você saiu da sua conta.");
     });
   }
+  if(target.dataset.favorite) toggleFavorite(Number(target.dataset.favorite));
   if(target.id === "open-cart") openCart();
   if(target.id === "close-cart" || target.id === "cart-backdrop") closeCart();
   if(target.id === "buy-now" || target.id === "impact-buy"){
@@ -369,8 +428,10 @@ $("#login-form").addEventListener("submit", async e => {
       email: form.get("email"),
       password: form.get("password")
     })});
+    if(!data.user) throw new Error(data.message || "O servidor respondeu, mas sem os dados do usuário. Verifique o api/login.php.");
     state.user = data.user;
     renderAuthUI();
+    loadFavorites();
     closeAuth();
     e.target.reset();
     status(`Bem-vindo, ${state.user.name.split(" ")[0]}.`);
@@ -395,15 +456,17 @@ $("#register-form").addEventListener("submit", async e => {
   const button = e.target.querySelector(".auth-submit");
   button.disabled = true;
   try {
-    const data = await api("api/register.php", {method:"POST", body: JSON.stringify({
+    const data = await api("api/cadastro.php", {method:"POST", body: JSON.stringify({
       name: form.get("name"),
       email: form.get("email"),
       phone: form.get("phone"),
       password: form.get("password"),
       passwordConfirm: form.get("passwordConfirm")
     })});
+    if(!data.user) throw new Error(data.message || "O servidor respondeu, mas sem os dados do usuário. Verifique o api/cadastro.php.");
     state.user = data.user;
     renderAuthUI();
+    loadFavorites();
     closeAuth();
     e.target.reset();
     status(`Conta criada. Bem-vindo, ${state.user.name.split(" ")[0]}.`);

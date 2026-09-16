@@ -1,6 +1,6 @@
 <?php
 $DB_HOST = "localhost";
-$DB_NAME = "agrolink";
+$DB_NAME = "cadastro_agrolink";
 $DB_USER = "root";
 $DB_PASS = "";
 
@@ -17,6 +17,6 @@ try {
 } catch (PDOException $e) {
     http_response_code(500);
     header("Content-Type: application/json");
-    echo json_encode(["message" => "Não foi possível conectar ao banco de dados. Verifique se o MySQL está ativo e se o banco 'agrolink' foi criado (veja sql/schema.sql)."]);
+    echo json_encode(["message" => "Não foi possível conectar ao banco de dados."]);
     exit;
 }

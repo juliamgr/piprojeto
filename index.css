@@ -30,15 +30,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-button,
-input,
-select,
-textarea {
+button, input, select, textarea {
   font: inherit;
 }
 
-button,
-a {
+button, a {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -61,8 +57,7 @@ img {
   max-width: 100%;
 }
 
-.sr-only,
-.sr-status {
+.sr-only, .sr-status {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -165,9 +160,7 @@ img {
   transition: right 180ms ease;
 }
 
-.main-nav a:hover::after,
-.main-nav a:focus-visible::after,
-.main-nav a:first-child::after {
+.main-nav a:hover::after, .main-nav a:focus-visible::after, .main-nav a:first-child::after {
   right: 0;
 }
 
@@ -198,8 +191,7 @@ img {
   font-weight: 600;
 }
 
-.bag-button,
-.menu-button {
+.bag-button, .menu-button {
   position: relative;
   width: 46px;
   height: 46px;
@@ -211,8 +203,7 @@ img {
   cursor: pointer;
 }
 
-.bag-button:hover,
-.menu-button:hover {
+.bag-button:hover, .menu-button:hover {
   background: var(--green-soft);
 }
 
@@ -262,11 +253,7 @@ img {
   color: #8fb52c;
 }
 
-.hero h1,
-.section-heading h2,
-.producer-copy h2,
-.impact-copy h2,
-.newsletter-card h2 {
+.hero h1, .section-heading h2, .producer-copy h2, .impact-copy h2, .newsletter-card h2 {
   margin: 0;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 600;
@@ -402,9 +389,7 @@ img {
   font-size: 13px;
 }
 
-.harvest-icon,
-.trust-icon,
-.step-icon {
+.harvest-icon, .trust-icon, .step-icon {
   flex: none;
   display: grid;
   place-items: center;
@@ -460,16 +445,12 @@ img {
   font-size: 12px;
 }
 
-.catalog-section,
-.how-section {
+.catalog-section, .how-section {
   padding: 103px 0 112px;
   background: var(--paper);
 }
 
-.section-heading h2,
-.producer-copy h2,
-.impact-copy h2,
-.newsletter-card h2 {
+.section-heading h2, .producer-copy h2, .impact-copy h2, .newsletter-card h2 {
   font-size: clamp(43px, 4.4vw, 62px);
 }
 
@@ -534,8 +515,7 @@ img {
   cursor: pointer;
 }
 
-.category-list button.active,
-.category-list button:hover {
+.category-list button.active, .category-list button:hover {
   border-color: var(--green);
   background: var(--green);
   color: white;
@@ -978,8 +958,7 @@ img {
   border-radius: 50%;
 }
 
-.eyebrow.light,
-.eyebrow.light svg {
+.eyebrow.light, .eyebrow.light svg {
   color: var(--lime-soft);
 }
 
@@ -1042,8 +1021,7 @@ img {
   gap: 24px;
 }
 
-.testimonial-card,
-.newsletter-card {
+.testimonial-card, .newsletter-card {
   min-height: 340px;
   padding: 48px;
   border-radius: 28px;
@@ -1073,8 +1051,7 @@ img {
   gap: 4px;
 }
 
-.testimonial-card p span,
-.newsletter-card > p:not(.eyebrow) {
+.testimonial-card p span, .newsletter-card > p:not(.eyebrow) {
   color: var(--muted);
   font-size: 12px;
 }
@@ -1284,8 +1261,7 @@ img {
   font-size: 31px;
 }
 
-.cart-header button,
-.remove-item {
+.cart-header button, .remove-item {
   width: 40px;
   height: 40px;
   display: grid;
@@ -1391,8 +1367,7 @@ img {
   width: 100%;
 }
 
-.empty-cart,
-.order-success {
+.empty-cart, .order-success {
   flex: 1;
   padding: 45px;
   display: flex;
@@ -1468,15 +1443,11 @@ img {
   font-weight: 700;
 }
 
-.checkout-fields label:nth-child(1),
-.checkout-fields label:nth-child(2),
-.checkout-fields label:nth-child(5) {
+.checkout-fields label:nth-child(1), .checkout-fields label:nth-child(2), .checkout-fields label:nth-child(5) {
   grid-column: 1 / -1;
 }
 
-.checkout-fields input,
-.checkout-fields select,
-.checkout-fields textarea {
+.checkout-fields input, .checkout-fields select, .checkout-fields textarea {
   width: 100%;
   min-height: 44px;
   padding: 10px 12px;
@@ -1494,9 +1465,7 @@ img {
   resize: vertical;
 }
 
-.checkout-fields input:focus,
-.checkout-fields select:focus,
-.checkout-fields textarea:focus {
+.checkout-fields input:focus, .checkout-fields select:focus, .checkout-fields textarea:focus {
   border-color: var(--green);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 10%, transparent);
 }
@@ -1579,8 +1548,7 @@ img {
   text-align: center;
 }
 
-.empty-cart > span,
-.order-success > span {
+.empty-cart > span, .order-success > span {
   width: 70px;
   height: 70px;
   display: grid;
@@ -1589,15 +1557,13 @@ img {
   background: var(--lime-soft);
 }
 
-.empty-cart h3,
-.order-success h3 {
+.empty-cart h3, .order-success h3 {
   margin: 20px 0 8px;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 30px;
 }
 
-.empty-cart p,
-.order-success p {
+.empty-cart p, .order-success p {
   margin: 0 0 23px;
   color: var(--muted);
   font-size: 13px;
@@ -1742,15 +1708,11 @@ img {
     border-left: 0;
   }
 
-  .catalog-section,
-  .how-section {
+  .catalog-section, .how-section {
     padding-block: 76px;
   }
 
-  .split-heading,
-  .producer-section,
-  .impact-section,
-  .testimonial-section {
+  .split-heading, .producer-section, .impact-section, .testimonial-section {
     grid-template-columns: 1fr;
   }
 
@@ -1826,8 +1788,7 @@ img {
     min-height: 360px;
   }
 
-  .hero-image,
-  .hero-image-wrap::before {
+  .hero-image, .hero-image-wrap::before {
     border-radius: 62px 18px 62px 18px;
   }
 
@@ -1848,8 +1809,7 @@ img {
     height: 112px;
   }
 
-  .steps-grid,
-  .impact-stats {
+  .steps-grid, .impact-stats {
     grid-template-columns: 1fr;
   }
 
@@ -1866,8 +1826,7 @@ img {
     border-left: 0;
   }
 
-  .testimonial-card,
-  .newsletter-card {
+  .testimonial-card, .newsletter-card {
     min-height: auto;
     padding: 32px 25px;
   }
@@ -1907,9 +1866,7 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -2052,6 +2009,10 @@ img {
   padding: 20px;
 }
 
+.auth-layer[hidden] {
+  display: none;
+}
+
 .auth-backdrop {
   position: absolute;
   inset: 0;
@@ -2180,4 +2141,21 @@ img {
     justify-content: center;
     border-radius: 50%;
   }
+}
+
+.favorite-button {
+  transition: transform 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.favorite-button:active {
+  transform: scale(0.88);
+}
+
+.favorite-button.is-active {
+  background: white;
+  color: var(--rust);
+}
+
+.favorite-button.is-active svg {
+  fill: currentColor;
 }
