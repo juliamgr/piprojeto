@@ -537,7 +537,7 @@ nearMeButton.addEventListener("click", () => {
   );
 });
 
-menuButton.addEventListener("click", () => {
+menuButton?.addEventListener("click", () => {
   const isOpen = mainNav.classList.toggle("is-open");
   menuButton.setAttribute("aria-expanded", String(isOpen));
   menuButton.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");

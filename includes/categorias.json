@@ -1,0 +1,114 @@
+{
+  "panificados": {
+    "label": "Pães, massas e biscoitos",
+    "terms": [
+      "PANIFIC",
+      "PÃO",
+      "PÃES",
+      "PAES",
+      "MASSA",
+      "BOLACHA",
+      "BISCOITO",
+      "CUCA",
+      "BOLO",
+      "SALGAD"
+    ]
+  },
+  "frutas-doces": {
+    "label": "Frutas, doces e conservas",
+    "terms": [
+      "FRUTA",
+      "DOCE",
+      "GELEIA",
+      "GELÉIA",
+      "CONSERV",
+      "COMPOTA",
+      "POLPA",
+      "RAPADURA",
+      "AÇÚCAR",
+      "ACUCAR",
+      "MELADO"
+    ]
+  },
+  "hortalicas-graos": {
+    "label": "Hortaliças, grãos e raízes",
+    "terms": [
+      "HORT",
+      "VERDURA",
+      "LEGUME",
+      "MANDIOCA",
+      "BATATA",
+      "FEIJ",
+      "ARROZ",
+      "MILHO",
+      "GRÃO",
+      "GRÃOS",
+      "GRAOS",
+      "AMENDOIM",
+      "FARINHA",
+      "CEREA",
+      "ERVA",
+      "TEMPER",
+      "CONDIMENT"
+    ]
+  },
+  "mel": {
+    "label": "Mel e produtos das abelhas",
+    "terms": [
+      "MEL",
+      "PRÓPOLIS",
+      "PROPOLIS",
+      "PÓLEN",
+      "POLEN",
+      "APÍCOL"
+    ]
+  },
+  "laticinios": {
+    "label": "Leite e derivados",
+    "terms": [
+      "LEITE",
+      "LATIC",
+      "QUEIJO",
+      "IOGURTE",
+      "NATA",
+      "MANTEIGA",
+      "RICOTA"
+    ]
+  },
+  "carnes-ovos": {
+    "label": "Carnes, ovos e pescados",
+    "terms": [
+      "CARNE",
+      "EMBUT",
+      "SALAME",
+      "LINGUI",
+      "COPA",
+      "BACON",
+      "SUÍN",
+      "SUIN",
+      "BOVIN",
+      "FRANGO",
+      "AVES",
+      "OVOS",
+      "PEIX",
+      "PESCAD",
+      "CAMAR",
+      "CHARQUE"
+    ]
+  },
+  "bebidas": {
+    "label": "Bebidas e derivados de uva",
+    "terms": [
+      "VINHO",
+      "VINAGRE",
+      "UVA",
+      "SUCO",
+      "BEBIDA",
+      "CERVEJA",
+      "CACHA",
+      "AGUARDENTE",
+      "LICOR",
+      "DESTILAD"
+    ]
+  }
+}

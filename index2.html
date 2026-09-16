@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pontos de retirada em Porto Alegre — Agrolink</title>
-  <meta name="description" content="Encontre feiras e pontos de retirada de cestas orgânicas da Agrolink em Porto Alegre. Consulte horários, endereços e como funciona a retirada.">
+  <meta name="description" content="Encontre feiras e pontos de retirada de alimentos frescos da agricultura familiar gaúcha. Projeto com apoio da FETAG-RS e da Secretaria de Desenvolvimento Rural do RS para aproximar quem produz de quem precisa.">
   <meta name="theme-color" content="#073f2a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,13 +17,18 @@
 
 
   <header class="site-header" id="inicio">
+    <button class="menu-button" id="menu-button" type="button"
+        aria-expanded="false" aria-label="Abrir menu" aria-controls="main-nav">
+  <i data-lucide="menu" aria-hidden="true"></i>
+</button>
     <a class="brand" href="#inicio"><img src="img/agrolink-logo.png"></a>
 
     <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+      <a href="index.html">Produtos</a>
       <a class="is-active" href="#mapa-feiras">Pontos de retirada</a>
       <a href="#como-retirar">Como retirar</a>
       <a href="#duvidas">Dúvidas</a>
-      <a href="index.html">Sobre nós</a>
+
     </nav>
 
     <div class="header-actions">
@@ -42,7 +47,7 @@
         <h1 id="page-title">Sua cesta fresca,<br><em>no caminho de casa.</em></h1>
       </div>
       <div class="intro-summary" aria-label="Resumo da rede de retirada">
-        <div><strong>8</strong><span>pontos na cidade</span></div>
+        <div><strong>18</strong><span>pontos na cidade</span></div>
         <div><strong>3</strong><span>dias de retirada</span></div>
         <div><strong>R$ 0</strong><span>de taxa</span></div>
       </div>
@@ -68,8 +73,8 @@
           </p>
     
           <div class="agro-feiras-assinatura">
-            <span aria-hidden="true">✳</span>
-            <span>Gente que planta.<br><strong>Gente que faz a feira.</strong></span>
+            <span aria-hidden="true"> </span>
+            <span><br><strong></strong></span>
           </div>
         </div>
     
@@ -211,9 +216,10 @@
         <div class="section-heading how-heading">
           <div>
             <p class="eyebrow"><i data-lucide="shopping-basket" aria-hidden="true"></i> Retirada Agrolink</p>
-            <h2 id="how-title">Você escolhe. A gente separa.</h2>
+            <h2 id="how-title">Você escolhe. Quem planta, entrega.
+            </h2>
           </div>
-          <p>O pedido sai das famílias produtoras já organizado por ponto, reduzindo trajetos, embalagens e desperdício.</p>
+          <p>Cada pedido sai direto das famílias produtoras, já organizado por ponto de retirada — menos intermediário, menos desperdício, mais renda para quem cultiva.</p>
         </div>
 
         <ol class="steps-grid">
@@ -249,13 +255,8 @@
             <span><i data-lucide="leaf" aria-hidden="true"></i> Colheita da semana</span>
           </div>
           <div class="promise-copy">
-            <p class="eyebrow"><i data-lucide="check-check" aria-hidden="true"></i> No dia da retirada</p>
-            <h2>Frescor preservado até chegar a você.</h2>
-            <ul>
-              <li><i data-lucide="snowflake" aria-hidden="true"></i><span><strong>Armazenamento adequado</strong>Itens refrigerados ficam em caixas térmicas até a retirada.</span></li>
-              <li><i data-lucide="package-open" aria-hidden="true"></i><span><strong>Pedido já conferido</strong>Sua cesta é separada e identificada antes de chegar ao ponto.</span></li>
-              <li><i data-lucide="shopping-bag" aria-hidden="true"></i><span><strong>Menos embalagem</strong>Você pode levar sua própria sacola ou caixa retornável.</span></li>
-            </ul>
+            <h2>Menos perda na cadeia, mais alimento na mesa.</h2>
+           <p>No Brasil, cerca de 30% do que é produzido se perde antes de chegar à mesa. Aqui, o trajeto é curto: da feira para você, sem estoque parado nem desperdício.</p>
             <p class="promise-note"><i data-lucide="clock-3" aria-hidden="true"></i> Chegue dentro do horário escolhido. Se houver um imprevisto, fale com a equipe antes do encerramento da feira.</p>
           </div>
         </div>
@@ -294,8 +295,8 @@
     <section class="final-cta" aria-label="Chamada para escolher um ponto">
       <div class="section-shell final-cta-inner">
         <div>
-          <p class="eyebrow light"><i data-lucide="sprout" aria-hidden="true"></i> Mais perto, mais fresco</p>
-          <h2>Encontre a feira que cabe na sua rotina.</h2>
+          <p class="eyebrow light"><i data-lucide="sprout" aria-hidden="true"></i>Da lavoura para o seu bairro</p>
+          <h2>Encontre o ponto de retirada mais perto de você.</h2>
         </div>
         <a class="button button-light" href="#mapa-feiras">Ver pontos no mapa <i data-lucide="arrow-up" aria-hidden="true"></i></a>
       </div>
@@ -322,7 +323,7 @@
       </div>
       <div class="certification">
         <i data-lucide="shield-check" aria-hidden="true"></i>
-        <span><strong>Rede verificada</strong>Origem e manejo conferidos.</span>
+        <span><strong>Apoio institucional</strong>Projeto realizado com apoio da FETAG-RS e da Secretaria de Desenvolvimento Rural do RS.</span>
       </div>
     </div>
     <div class="footer-bottom section-shell">
