@@ -1,18 +1,6 @@
 const pickupPoints = [
   {
     id: 1,
-    name: "Feira dos Agricultores Ecologistas",
-    shortName: "FAE — Bom Fim",
-    neighborhood: "Bom Fim",
-    region: "Centro",
-    address: "Av. José Bonifácio, 675 — quadra 1",
-    day: "sábado",
-    schedule: "Sábado, 7h às 13h",
-    lat: -30.03382,
-    lng: -51.21319
-  },
-  {
-    id: 2,
     name: "Feira Ecológica do Bom Fim",
     shortName: "Ecológica do Bom Fim",
     neighborhood: "Bom Fim",
@@ -24,7 +12,7 @@ const pickupPoints = [
     lng: -51.21155
   },
   {
-    id: 3,
+    id: 2,
     name: "Feira Ecológica da Tristeza",
     shortName: "Ecológica da Tristeza",
     neighborhood: "Tristeza",
@@ -36,7 +24,7 @@ const pickupPoints = [
     lng: -51.24619
   },
   {
-    id: 4,
+    id: 3,
     name: "Feira Ecológica Três Figueiras",
     shortName: "Ecológica Três Figueiras",
     neighborhood: "Três Figueiras",
@@ -48,7 +36,7 @@ const pickupPoints = [
     lng: -51.17476
   },
   {
-    id: 5,
+    id: 4,
     name: "Feira Ecológica Praça André Forster",
     shortName: "Praça André Forster",
     neighborhood: "Bom Fim",
@@ -60,7 +48,7 @@ const pickupPoints = [
     lng: -51.20712
   },
   {
-    id: 6,
+    id: 5,
     name: "Feira Ecológica Lindóia",
     shortName: "Ecológica Lindóia",
     neighborhood: "Jardim Lindóia",
@@ -72,7 +60,7 @@ const pickupPoints = [
     lng: -51.14387
   },
   {
-    id: 7,
+    id: 6,
     name: "Feira Ecológica Auxiliadora",
     shortName: "Ecológica Auxiliadora",
     neighborhood: "Auxiliadora",
@@ -84,7 +72,7 @@ const pickupPoints = [
     lng: -51.19723
   },
   {
-    id: 8,
+    id: 7,
     name: "Feira do Centro Administrativo Municipal",
     shortName: "Centro Administrativo",
     neighborhood: "Centro Histórico",
@@ -96,7 +84,7 @@ const pickupPoints = [
     lng: -51.23018
   },
   {
-    id: 9,
+    id: 8,
     name: "Feira Modelo Epatur",
     shortName: "Feira Modelo Epatur",
     neighborhood: "Cidade Baixa",
@@ -108,7 +96,7 @@ const pickupPoints = [
     lng: -51.2263062
   },
   {
-    id: 10,
+    id: 9,
     name: "Feira Modelo General João Telles",
     shortName: "Feira Gen. João Telles",
     neighborhood: "Bom Fim",
@@ -120,7 +108,7 @@ const pickupPoints = [
     lng: -51.2121381
   },
   {
-    id: 11,
+    id: 10,
     name: "Feira Modelo Praça Florida",
     shortName: "Feira da Praça Florida",
     neighborhood: "Floresta",
@@ -132,7 +120,7 @@ const pickupPoints = [
     lng: -51.2103979
   },
   {
-    id: 12,
+    id: 11,
     name: "Feira Encol",
     shortName: "Feira da Encol",
     neighborhood: "Bela Vista",
@@ -144,7 +132,7 @@ const pickupPoints = [
     lng: -51.1874856
   },
   {
-    id: 13,
+    id: 12,
     name: "Feira Modelo Germânia",
     shortName: "Feira Germânia",
     neighborhood: "Jardim Europa",
@@ -156,7 +144,7 @@ const pickupPoints = [
     lng: -51.1552056
   },
   {
-    id: 14,
+    id: 13,
     name: "Feira Modelo Menino Deus",
     shortName: "Feira Menino Deus",
     neighborhood: "Menino Deus",
@@ -168,7 +156,7 @@ const pickupPoints = [
     lng: -51.2262949
   },
   {
-    id: 15,
+    id: 14,
     name: "Feira Modelo Jardim Botânico",
     shortName: "Feira Jardim Botânico",
     neighborhood: "Jardim Botânico",
@@ -180,7 +168,7 @@ const pickupPoints = [
     lng: -51.1838723
   },
   {
-    id: 16,
+    id: 15,
     name: "Feira Modelo Vila Nova",
     shortName: "Feira Vila Nova",
     neighborhood: "Vila Nova",
@@ -192,7 +180,7 @@ const pickupPoints = [
     lng: -51.2196464
   },
   {
-    id: 17,
+    id: 16,
     name: "Mercadão Moinhos de Vento",
     shortName: "Mercadão Moinhos de Vento",
     neighborhood: "Moinhos de Vento",
@@ -204,7 +192,7 @@ const pickupPoints = [
     lng: -51.2012349
   },
   {
-    id: 18,
+    id: 17,
     name: "Mercadão Cidade Baixa",
     shortName: "Mercadão Cidade Baixa",
     neighborhood: "Cidade Baixa",

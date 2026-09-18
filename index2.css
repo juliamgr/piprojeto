@@ -121,6 +121,14 @@ img { display: block; max-width: 100%; }
   height: 80px;
 }
 
+.brand img{
+  max-width: 160px;
+  max-height: 57px;
+  margin-top: 13px;
+  margin-left: 9px;
+
+}
+
 .hero-image-wrap{
   position: relative;
   height: 480px;
