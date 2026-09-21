@@ -74,14 +74,6 @@ $heroPhoto=is_file(__DIR__.'/img/agricultores6.jpg')?'img/agricultores6.jpg':nul
   </p>
 </div>
 <?php endif; ?>
-<div class="visual-caption">
-  <span class="small-leaf" aria-hidden="true">
-  </span>
-  <div>
-    <strong>Orgânicos Sabor e Saúde</strong>
-    <span>Eldorado do Sul · Rio Grande do Sul</span>
-  </div>
-</div>
 </div></section>
 <section class="story shell" id="nossa-historia" aria-labelledby="story-title">
   <h2 id="story-title">Origens do projeto<br>
@@ -151,7 +143,7 @@ $heroPhoto=is_file(__DIR__.'/img/agricultores6.jpg')?'img/agricultores6.jpg':nul
   </strong><span>agroindústrias na base</span></div><div><strong>
     <?= (int)$data['stats']['municipios'] ?></strong>
     <span>municípios representados</span></div><div><strong><?= (int)$data['stats']['organicos'] ?></strong>
-    <span>registros como orgânico certificado*</span>
+    <span>registros como orgânico certificado</span>
   </div></div><?php endif; ?>
 <form class="search-panel" method="get" action="index3.php#produtores" aria-label="Pesquisar agroindústrias"><div class="search-top"><label for="busca">O que você está procurando?</label><div class="search-bar"><span aria-hidden="true">⌕</span><input id="busca" type="search" name="busca" maxlength="150" value="<?= sobre_e($filters['busca']) ?>" placeholder="Nome, alimento, município ou registro PEAF"><button class="button primary" type="submit">Pesquisar <span aria-hidden="true">→</span></button></div></div><div class="filter-grid">
 <label>Categoria de alimentos<select name="categoria"><option value="">Todas as categorias</option><?php foreach($categories as $key=>$category): ?><option value="<?= sobre_e($key) ?>" <?= $filters['categoria']===$key?'selected':'' ?>><?= sobre_e($category['label']) ?></option><?php endforeach; ?><option value="outros" <?= $filters['categoria']==='outros'?'selected':'' ?>>Outros processamentos</option></select></label>

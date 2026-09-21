@@ -202,6 +202,18 @@ const pickupPoints = [
     schedule: "Sábado, 7h às 12h",
     lat: -30.0382046,
     lng: -51.2263062
+  },
+  {
+    id: 18,
+    name: "Feira Orgânica da Inconfidência",
+    shortName: "Feira da Inconfidência",
+    neighborhood: "Centro",
+    region: "Centro",
+    address: "Av. Inconfidência esquina com Av. Santos Ferreira",
+    day: "Quarta & sábado",
+    schedule: "Quartas, 13h–18h; sábados, 7h–12h",
+    lat: -29.9232472,
+    lng: -51.1738295
   }
 ];
 
