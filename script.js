@@ -190,21 +190,92 @@ let products = [];
     lucide.createIcons();
   }
   
-  async function api(url, options = {}){
-    const response = await fetch(url, {headers:{"Content-Type":"application/json"}, ...options});
-    const data = await response.json().catch(() => ({}));
-    if(!response.ok) throw new Error(data.message || "Não foi possível concluir a solicitação.");
+  async function api(url, options = {}) {
+
+    const response = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      ...options
+    });
+  
+    const text = await response.text();
+  
+    console.log("URL chamada:", response.url);
+    console.log("Status:", response.status);
+    console.log("Resposta RAW:", text);
+  
+    let data;
+  
+    try {
+      data = JSON.parse(text);
+    } catch (error) {
+      console.error("Resposta não é JSON:", text);
+      throw new Error("A API não retornou JSON válido.");
+    }
+  
+    console.log("JSON convertido:", data);
+    console.log("Chaves:", Object.keys(data));
+  
+    if (!response.ok) {
+      throw new Error(data.message || "Não foi possível concluir a solicitação.");
+    }
+  
     return data;
   }
 
-  async function loadProducts(){
-    $("#product-grid").innerHTML = `<p class="catalog-message">Carregando a feira...</p>`;
+  async function loadProducts() {
+
+    const grid = $("#product-grid");
+  
+    grid.innerHTML = `
+      <p class="catalog-message">
+        Carregando a feira...
+      </p>
+    `;
+  
     try {
-      const data = await api("api/products.php");
+  
+      const data = await api(
+        "/AGROLINK-2026/api/products.php?nocache=" + Date.now()
+      );
+  
+      console.log("========== PRODUTOS ==========");
+      console.log("data:", data);
+      console.log("data.products:", data.products);
+      console.log("typeof data.products:", typeof data.products);
+      console.log("Array?", Array.isArray(data.products));
+      console.log("==============================");
+  
+      if (!data.products) {
+        throw new Error("A API não enviou o campo products.");
+      }
+  
+      if (!Array.isArray(data.products)) {
+        throw new Error(
+          "O campo products existe, mas não é uma lista."
+        );
+      }
+  
       products = data.products;
+  
+      renderCategories();
       renderProducts();
+      renderCartCount();
+  
     } catch (error) {
-      $("#product-grid").innerHTML = `<p class="catalog-message">${error.message} Abra o projeto pelo Apache do XAMPP.</p>`;
+  
+      console.error("Erro ao carregar produtos:", error);
+  
+      products = [];
+  
+      grid.innerHTML = `
+        <p class="catalog-message">
+          ${error.message}
+        </p>
+      `;
     }
   }
   
@@ -331,6 +402,5 @@ let products = [];
   
   lucide.createIcons();
   renderCategories();
-  loadProducts();
   renderCartCount();
-  
+  loadProducts();

@@ -23,7 +23,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--cream);
+  background: var(--paper);
   color: var(--green);
   font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -263,9 +263,15 @@ img { display: block; max-width: 100%; }
    font-weight: 500;
    }
 
+.intro-copy {
+  margin-left: 500px;
+  margin-top: -100px;
+  font-size: 40px;
+
+}
+
 .intro-copy > p:last-child {
-  max-width: 620px;
-  margin: 24px 0 0;
+  max-width: 900px;
   color: #345247;
   font-size: 18px;
 }

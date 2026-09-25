@@ -15,14 +15,13 @@
     box-sizing: border-box
   }
   
-  html {
+  html { 
     scroll-behavior: smooth;
-    scroll-padding-top: 110px
-  }
+    scrollbar-color: #174f39 #ffffff00; }
   
   body {
     margin: 0;
-    background: var(--cream);
+    background: var(--paper);
     color: var(--ink);
     font: 15px/1.65 "DM Sans",Arial,Helvetica,sans-serif;
     -webkit-font-smoothing: antialiased
@@ -130,8 +129,9 @@
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(247,243,232,.97);
-    border-bottom: 1px solid var(--line)
+    background: color-mix(in srgb, var(--paper) 75%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--green) 10%, transparent);
+    backdrop-filter: blur(18px);
   }
   .header-inner {
     display: flex;

@@ -18,9 +18,9 @@
   box-sizing: border-box;
 }
 
-html {
+html { 
   scroll-behavior: smooth;
-}
+  scrollbar-color: #174f39 #ffffff00; }
 
 body {
   margin: 0;
