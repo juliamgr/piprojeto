@@ -1,5 +1,4 @@
-let products = [];
-  
+let products = [];  
   const categories = ["Todos","Cestas","Folhas","Frutas","Legumes"];
   const state = {
     category: "Todos",

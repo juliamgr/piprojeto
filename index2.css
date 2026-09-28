@@ -131,8 +131,8 @@ img { display: block; max-width: 100%; }
 
 .hero-image-wrap{
   position: relative;
-  height: 480px;
-  width:  540px;
+  height: 550px;
+  width:  640px;
   border: 0px solid #1C6EA4;
   border-radius: 6px 40px 40px 6px;
   margin: 20px;
