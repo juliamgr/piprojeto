@@ -91,6 +91,14 @@ img { display: block; max-width: 100%; }
   text-align: center;
 }
 
+.pickup-promise { 
+   width:max(1200px); 
+   display: flex;
+   align-self: center;
+   margin: 15px 15px 15px 15px;
+  }
+
+
 .delivery-strip-dot {
   flex: 0 0 auto;
   width: 5px;
@@ -259,21 +267,15 @@ img { display: block; max-width: 100%; }
  }
 
 .intro h1 em {
-   color: var(--rust); 
+   color: var(--lime); 
    font-weight: 500;
    }
 
 .intro-copy {
   margin-left: 500px;
-  margin-top: -100px;
+  margin-bottom: 70px;
+  margin-top: -900px;
   font-size: 40px;
-
-}
-
-.intro-copy > p:last-child {
-  max-width: 900px;
-  color: #345247;
-  font-size: 18px;
 }
 
 .intro-summary {
@@ -792,7 +794,6 @@ img { display: block; max-width: 100%; }
   .steps-grid li { min-height: 240px; border-top: 1px solid var(--line); }
   .steps-grid li:nth-child(3) { padding-left: 0; border-left: 0; }
   .steps-grid li:nth-child(3) .step-number { left: 0; }
-  .pickup-promise { grid-template-columns: 1fr; }
   .promise-image { min-height: 420px; max-height: 500px; }
   .faq-layout { grid-template-columns: 1fr; gap: 50px; }
   .faq-intro { position: static; }
@@ -893,7 +894,7 @@ img { display: block; max-width: 100%; }
 }
 
 .agro-feiras-texto h2 em {
-  color: var(--rust, #b95d38);
+  color: var(--lime);
   font-weight: 500;
 }
 
@@ -963,11 +964,6 @@ img { display: block; max-width: 100%; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 40%,
-    rgb(3 24 16 / 85%) 100%
-  );
   pointer-events: none;
 }
 

@@ -35,6 +35,10 @@ $heroPhoto=is_file(__DIR__.'/img/agricultores6.jpg')?'img/agricultores6.jpg':nul
     crossorigin="anonymous">
   <link rel="stylesheet" href="index3.css">
   <script src="index3.js" defer></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png">
+<link rel="manifest" href="/site.webmanifest">
 </head>
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

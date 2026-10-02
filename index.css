@@ -161,7 +161,11 @@ img {
 .main-nav a:first-child::after {
   right: 0;
 }
-
+ 
+h1 em {
+  font-style: normal;
+  color: var(--lime);}
+  
 .header-actions {
   display: flex;
   align-items: center;
