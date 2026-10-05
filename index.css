@@ -258,7 +258,6 @@ h1 em {
   color: #8fb52c;
 }
 
-.hero h1,
 .section-heading h2,
 .producer-copy h2,
 .impact-copy h2,
@@ -272,7 +271,12 @@ h1 em {
 
 .hero h1 {
   max-width: 610px;
-  font-size: clamp(58px, 5.2vw, 82px);
+  font-size: clamp(65px, 5.2vw, 82px);
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
 }
 
 .hero-description {
