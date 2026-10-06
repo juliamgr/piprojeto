@@ -1,5 +1,5 @@
 let products = [];  
-  const categories = ["Todos","Cestas","Folhas","Frutas","Legumes"];
+  const categories = ["Todos","Cestas","Folhas","Frutas","Legumes", "Mel", "Ovos", "Temperos", "Laticínios"];
   const state = {
     category: "Todos",
     search: "",

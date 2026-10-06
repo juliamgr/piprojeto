@@ -878,6 +878,13 @@ h1 em {
   color: var(--muted);
 }
 
+.progress-line {
+  height: 2px;
+  background: var(--line);
+  flex: 1;
+  margin: 0 12px;
+}
+
 .text-link {
   display: inline-flex;
   align-items: center;
@@ -1037,6 +1044,8 @@ h1 em {
 
 .testimonial-card,
 .newsletter-card {
+  margin-left: 300px;
+  margin-right: -300px;
   min-height: 340px;
   padding: 48px;
   border-radius: 28px;
