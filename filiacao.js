@@ -58,6 +58,12 @@ function validateBasic() {
     alert("Você precisa concordar com o uso dos dados para continuar.");
     ok = false;
   }
+  const password = document.getElementById("password");
+  const confirmation = document.getElementById("password_confirmation");
+  [password, confirmation].forEach(clearError);
+  const bytes = new TextEncoder().encode(password.value).length;
+  if (bytes < 12 || bytes > 72) { showError(password, "Use uma senha de 12 a 72 bytes."); ok = false; }
+  if (password.value !== confirmation.value) { showError(confirmation, "As senhas não coincidem."); ok = false; }
   return ok;
 }
 
@@ -68,9 +74,10 @@ continueButton.addEventListener("click", () => {
 backButton.addEventListener("click", () => setStep(1));
 cancelButton.addEventListener("click", () => setStep(1));
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
+  if (!validateBasic()) { setStep(1); return; }
   const requiredFull = [...fullStep.querySelectorAll("[required]")];
   let ok = true;
 
@@ -87,16 +94,35 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  // Neste ponto os dados estão prontos para serem enviados ao PHP/API.
-  // Por enquanto, guardamos uma cópia local para testar o fluxo da interface.
-  const data = Object.fromEntries(new FormData(form).entries());
-  localStorage.setItem("agrolink_filiacao_teste", JSON.stringify({
-    ...data,
-    created_at: new Date().toISOString()
-  }));
-
-  form.hidden = true;
-  successState.hidden = false;
+  const message = document.getElementById("formMessage");
+  const button = form.querySelector('[type="submit"]');
+  if (button.disabled) return;
+  button.disabled = true;
+  button.textContent = "Salvando…";
+  message.hidden = true;
+  try {
+    const sessionResponse = await fetch("api/user-session.php", {cache: "no-store"});
+    if (!sessionResponse.ok) throw new Error("Não foi possível iniciar a sessão. Acesse o site pelo Apache/PHP.");
+    const session = await sessionResponse.json();
+    const response = await fetch("api/register.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "X-CSRF-Token": session.csrf},
+      body: JSON.stringify(Object.fromEntries(new FormData(form).entries()))
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.message || "Não foi possível salvar seu cadastro.");
+    try { localStorage.removeItem("agrolink_filiacao_teste"); } catch (_) {}
+    form.reset();
+    form.hidden = true;
+    successState.hidden = false;
+  } catch (error) {
+    message.textContent = error instanceof SyntaxError ? "Resposta inválida do servidor. Confira o PHP e a conexão com o banco." : error.message;
+    message.hidden = false;
+    message.scrollIntoView({behavior: "smooth", block: "center"});
+  } finally {
+    button.disabled = false;
+    button.textContent = "Enviar cadastro ✓";
+  }
 });
 
 document.querySelectorAll("input, select, textarea").forEach(input => {

@@ -22,7 +22,7 @@
     <nav class="main-nav" aria-label="Navegação principal">
       <a href="index.html">Produtos</a>
       <a href="index2.html">Pontos de retirada</a>
-      <a class="active" href="filiacao.html">Filiação</a>
+      <a class="active" href="index4%20.html">Filiação</a>
       <a href="index3.php">Sobre nós</a>
     </nav>
     <a class="back-link" href="index.html">Voltar ao site</a>
@@ -46,6 +46,7 @@
           <div class="progress-step"><span>2</span><small>Ficha completa</small></div>
         </div>
 
+        <p id="formMessage" role="alert" hidden></p>
         <form id="membershipForm" novalidate>
           <section id="basicStep" class="form-step active" aria-labelledby="basic-title">
             <h2 id="basic-title">Vamos dar o primeiro passo. </h2>
@@ -70,8 +71,13 @@
               </label>
             </div>
 
+            <div class="field-grid">
+              <label class="field"><span>Senha *</span><input id="password" name="password" type="password" minlength="12" maxlength="72" autocomplete="new-password" required><small>Use de 12 a 72 caracteres; prefira uma frase longa.</small><small class="error"></small></label>
+              <label class="field"><span>Confirmar senha *</span><input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required><small class="error"></small></label>
+            </div>
+            <p>Já tem cadastro? <a href="login.php">Entrar na conta</a></p>
             <label class="check-row">
-              <input id="privacy" type="checkbox" required>
+              <input id="privacy" name="privacy" value="1" type="checkbox" required>
               <span>Concordo com o uso dos dados para fins de cadastro e contato do Agrolink.</span>
             </label>
 
@@ -151,8 +157,8 @@
           <div class="success-icon">✓</div>
           <p class="step-kicker">Cadastro enviado</p>
           <h2>Obrigado por fazer parte.</h2>
-          <p>Recebemos seus dados. A equipe do Agrolink poderá entrar em contato pelo telefone ou e-mail informado.</p>
-          <a class="primary-button inline-button" href="index.html">Voltar para o Agrolink</a>
+          <p>Seu cadastro foi salvo. Você já pode entrar na sua conta com o e-mail e a senha escolhidos.</p>
+          <a class="primary-button inline-button" href="login.php">Entrar na minha conta</a>
         </div>
       </div>
     </section>

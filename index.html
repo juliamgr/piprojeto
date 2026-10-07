@@ -6,11 +6,14 @@
   <meta name="description" content="Agrolink — produtos orgânicos da agricultura familiar do Rio Grande do Sul.">
   <title>Agrolink</title>
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="cadastro.css">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png">
 <link rel="manifest" href="/site.webmanifest">
+
 </head>
+<script src="js/conta.js"></script>
 <body>
 <main>
 
@@ -24,6 +27,7 @@
       <a href="index3.php">Sobre nós</a>
     </nav>
     <div class="header-actions">
+      <button class="signup-open" type="button" data-open-signup aria-haspopup="dialog" aria-controls="signup-dialog">Cadastre-se</button>
       <label class="location-select">
         <i data-lucide="map-pin" aria-hidden="true"></i>
         <span class="sr-only">Região de entrega</span>
@@ -52,7 +56,7 @@
       <p class="hero-description">Frutas, verduras e cestas orgânicas de famílias produtoras. Com origem conhecida, preço justo e menos desperdício.</p>
       <div class="hero-actions">
         <button class="button button-primary" id="buy-now" type="button">Comprar agora <i data-lucide="arrow-right"></i></button>
-        <a class="button button-secondary" href="#produtores">Conhecer produtores <i data-lucide="arrow-right"></i></a>
+        <button class="button button-secondary" type="button" data-open-signup aria-haspopup="dialog" aria-controls="signup-dialog">Criar minha conta <i data-lucide="user-plus" aria-hidden="true"></i></button>
       </div>
       <div class="hero-proof" aria-label="Resultados da rede Agrolink">
         <span><strong>42</strong> famílias</span>
@@ -174,6 +178,40 @@
 </main>
 
 
+
+<dialog id="signup-dialog" class="signup-dialog" aria-labelledby="signup-title">
+  <div class="signup-heading"><div><p class="signup-kicker">FAÇA PARTE DA NOSSA REDE</p><h2 id="signup-title">Crie sua conta.</h2></div><button class="signup-close" type="button" aria-label="Fechar cadastro">×</button></div>
+  <p class="signup-intro">Da nossa terra para a sua mesa. Cadastre-se no Agrolink.</p>
+  <p id="signup-message" class="signup-message" role="alert" tabindex="-1" hidden></p>
+  <form id="signup-form">
+    <p class="signup-hint">Os campos com * são obrigatórios.</p>
+    <div class="signup-grid">
+      <label class="signup-wide">Nome completo *<input name="name" autocomplete="name" required minlength="3" maxlength="90" autofocus></label>
+      <label>E-mail *<input name="email" type="email" autocomplete="email" required maxlength="160"></label>
+      <label>Telefone / WhatsApp *<input name="phone" type="tel" autocomplete="tel" required minlength="10" maxlength="30" placeholder="(51) 99999-9999"></label>
+      <label>Senha *<input name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="72" aria-describedby="signup-password-hint"></label>
+      <label>Confirmar senha *<input name="password_confirmation" type="password" autocomplete="new-password" required maxlength="72"></label>
+      <small id="signup-password-hint" class="signup-wide">Use uma frase com pelo menos 12 caracteres. Limite: 72 bytes; acentos podem ocupar mais de um byte.</small>
+      <label>Tipo de filiação *<select name="member_type" required><option value="">Selecione</option><option>Produtor(a) rural</option><option>Agricultor(a) familiar</option><option>Consumidor(a)</option><option>Organização / entidade</option><option>Outro</option></select></label>
+      <label>Município *<input name="city" autocomplete="address-level2" required minlength="2" maxlength="100" placeholder="Ex.: Porto Alegre"></label>
+      <label class="signup-wide">Endereço *<input name="address" autocomplete="street-address" required minlength="3" maxlength="220" placeholder="Rua, número e complemento"></label>
+    </div>
+    <details class="signup-extra"><summary>Informações adicionais (opcionais)</summary><div class="signup-grid">
+      <label>CPF<input name="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00"></label>
+      <label>Data de nascimento<input name="birth_date" type="date"></label>
+      <label>Bairro<input name="neighborhood" maxlength="100"></label>
+      <label>CEP<input name="zip_code" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000"></label>
+      <label class="signup-wide">O que você produz ou deseja oferecer?<textarea name="production" rows="2" maxlength="4000"></textarea></label>
+      <label class="signup-wide">Observações<textarea name="notes" rows="2" maxlength="4000"></textarea></label>
+    </div></details>
+    <label class="signup-consent"><input type="checkbox" name="privacy" value="1" required><span>Concordo com o uso dos meus dados para cadastro e contato do Agrolink. *</span></label>
+    <button class="button button-primary signup-submit" type="submit">Criar minha conta →</button>
+    <p class="signup-login">Já tem cadastro? <a href="conta.php">Entrar na minha conta</a></p>
+  </form>
+  <div id="signup-success" class="signup-success" role="status" tabindex="-1" hidden><span aria-hidden="true">✓</span><h3>Bem-vindo ao Agrolink!</h3><p>Seu cadastro foi salvo. Entre com seu e-mail e senha para acessar sua conta.</p><a class="button button-primary" href="login.php">Entrar na minha conta →</a></div>
+</dialog>
+
+<script src="cadastro.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="script.js"></script>
 </body>
