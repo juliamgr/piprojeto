@@ -1,0 +1,63 @@
+AGROLINK — MINHA CONTA E DADOS DA SACOLA
+
+COMO INSTALAR
+1. Faça uma cópia de segurança da sua pasta AGROLINK-2026.
+2. Extraia este ZIP. Para atualizar seu site, copie os arquivos abaixo para
+   os mesmos caminhos na pasta existente, substituindo quando solicitado:
+
+   BACKEND/app/profile.php                 (novo)
+   BACKEND/app/orders.php
+   FRONT-AGROLINK/conta.php
+   FRONT-AGROLINK/conta.css
+   FRONT-AGROLINK/api/user-session.php
+   FRONT-AGROLINK/js/checkout-perfil.js      (novo)
+   FRONT-AGROLINK/script.js
+   FRONT-AGROLINK/index.html
+
+3. Mantenha seu BACKEND/app/config.php e a configuração atual do banco.
+   Não importe novamente o banco, não apague a tabela users e não execute
+   os SQL de demonstração. Esta atualização usa as colunas já existentes.
+4. Com Apache/PHP e MySQL ligados, abra:
+   http://localhost/AGROLINK-2026/FRONT-AGROLINK/index.html
+   Recarregue com Ctrl+F5 para atualizar os scripts em cache.
+
+COMO USAR
+Entre na sua conta e clique em "Minha conta" no cabeçalho.
+Edite os dados e clique em "Salvar alterações". O formulário salva diretamente
+na tabela users do mesmo banco usado pelo cadastro e pelo painel administrativo.
+Você pode editar nome, e-mail, telefone, CPF, nascimento, filiação, município,
+endereço, bairro, CEP, produção e observações.
+Para trocar o e-mail de acesso, informe sua senha atual. Depois use o novo
+ e-mail para entrar. A senha não é alterada por este formulário.
+
+Na sacola, clique em "Continuar pedido". Nome, e-mail, telefone, cidade e
+endereço serão consultados no backend e preenchidos automaticamente.
+Nome e e-mail acompanham a identidade salva da conta; para mudá-los, use
+"Editar dados da conta". Telefone e endereço podem ser ajustados para aquele
+pedido. Para tornar uma alteração permanente, salve-a na página Minha conta.
+Bairro e CEP entram no endereço de entrega quando estiverem cadastrados.
+Se o endereço completo ultrapassar 220 caracteres, o formulário pede que
+você o resuma para aquele pedido, sem cortar informações silenciosamente.
+Se a cidade cadastrada não for atendida, escolha uma região disponível.
+O checkout continua vinculado à conta autenticada e ao fluxo de pedidos
+já existente. Editar o perfil não modifica os dados de pedidos anteriores.
+
+VERIFICAÇÃO NO SEU AMBIENTE
+- Entre, altere telefone/endereço e salve. Recarregue a página: devem permanecer.
+- Confira o mesmo usuário em BACKEND/admin/users.php.
+- Abra a sacola e confira os dados; envie um pedido e confira-o no painel.
+- Saia e entre novamente: os dados devem continuar salvos.
+- Ao mudar o e-mail, teste a senha atual e confira o login com o novo e-mail.
+
+VALIDAÇÃO REALIZADA
+Sintaxe JavaScript verificada com Node. Testes da lógica do checkout passaram
+para preenchimento, cidade não atendida, resposta lenta, visitante sem login,
+falha da API com nova tentativa e endereço longo. Esses testes usaram respostas
+simuladas. Não foi possível executar PHP/MySQL ou uma validação visual com
+navegador neste ambiente; o fluxo completo deve ser conferido no seu servidor.
+
+SEGURANÇA
+As atualizações usam o ID da sessão (nunca um ID enviado pelo formulário),
+proteção CSRF, validação no servidor e consultas parametrizadas. A API da sessão
+não devolve senha, hash de senha, CPF nem observações pessoais. A conta de
+cliente não concede acesso ao painel administrativo.
