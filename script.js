@@ -1,5 +1,6 @@
+window.lucide = window.lucide || { createIcons() {} };
 let products = [];  
-  const categories = ["Todos","Cestas","Folhas","Frutas","Legumes", "Mel", "Ovos", "Temperos", "Laticínios"];
+  const categories = ["Todos","Cestas","Folhas","Frutas","Legumes","Mel","Ovos","Temperos","Laticínios","Laticínio","Panificados","Tubérculos"];
   const state = {
     category: "Todos",
     search: "",
@@ -123,6 +124,7 @@ let products = [];
           <p class="order-code">Código <strong>${state.receipt.code}</strong></p>
           <p>Seu pedido foi salvo com segurança. A equipe Agrolink entrará em contato para confirmar a entrega.</p>
           <div class="order-total"><span>Total do pedido</span><strong>${money(state.receipt.total)}</strong></div>
+          <a class="button button-primary" href="pedidos.php">Acompanhar entrega</a>
           <button class="button button-primary" id="back-to-market" type="button">Voltar à feira</button>
         </div>`;
       lucide.createIcons();
@@ -139,7 +141,7 @@ let products = [];
             <label>Nome completo*<input name="customerName" autocomplete="name" required minlength="2" maxlength="90"></label>
             <label>E-mail<input name="customerEmail" type="email" autocomplete="email" required maxlength="160"></label>
             <label>Telefone com DDD*<input name="customerPhone" type="tel" placeholder="(51) 99999-9999" required maxlength="30"></label>
-            <label>Região de entrega*<select name="deliveryRegion" required><option>Porto Alegre</option><option>Canoas</option><option>Viamão</option><option>Guaíba</option></select></label>
+            <label>Região de entrega*<select name="deliveryRegion" required><option value="">Selecione sua região</option><option>Porto Alegre</option><option>Canoas</option><option>Viamão</option><option>Guaíba</option></select></label>
             <label>Endereço completo*<textarea name="deliveryAddress" autocomplete="street-address" placeholder="Rua, número, complemento e bairro" required minlength="8" maxlength="220"></textarea></label>
           </div>
           <fieldset class="payment-options">
@@ -148,9 +150,10 @@ let products = [];
             <label><input type="radio" name="paymentMethod" value="delivery"><span><strong>Pagamento na entrega</strong><small>Combine no recebimento</small></span></label>
           </fieldset>
           <div class="checkout-total"><span>Total com entrega</span><strong>${money(total+shipping)}</strong></div>
-          <p class="checkout-note">Nenhuma cobrança é feita nesta etapa. É apenas uma demonstração.</p>
+          <p class="checkout-note">Confira os dados de entrega. Nenhuma cobrança é feita nesta etapa.</p>
           <button class="button button-primary checkout-button" type="submit">Reservar pedido <i data-lucide="arrow-right"></i></button>
         </form>`;
+      document.dispatchEvent(new CustomEvent('agrolink:checkout-ready', { detail: document.getElementById('checkout-form') }));
       lucide.createIcons();
       return;
     }
@@ -182,7 +185,7 @@ let products = [];
           <div><span>Subtotal</span><strong>${money(total)}</strong></div>
           <div><span>Entrega refrigerada</span><strong>${shipping===0?"Grátis":money(shipping)}</strong></div>
           <div class="cart-total"><span>Total</span><strong>${money(total+shipping)}</strong></div>
-          <p><i data-lucide="package-check"></i> Entrega estimada no próximo sábado</p>
+          <p><i data-lucide="package-check"></i> Veja a previsão em Minhas entregas após a confirmação</p>
           <button class="button button-primary checkout-button" id="continue-checkout" type="button">Continuar pedido <i data-lucide="arrow-right"></i></button>
         </div>`;
     }
@@ -201,23 +204,19 @@ let products = [];
     });
   
     const text = await response.text();
-  
-    console.log("URL chamada:", response.url);
-    console.log("Status:", response.status);
-    console.log("Resposta RAW:", text);
-  
+
+
+
     let data;
   
     try {
       data = JSON.parse(text);
     } catch (error) {
-      console.error("Resposta não é JSON:", text);
+
       throw new Error("A API não retornou JSON válido.");
     }
-  
-    console.log("JSON convertido:", data);
-    console.log("Chaves:", Object.keys(data));
-  
+
+
     if (!response.ok) {
       throw new Error(data.message || "Não foi possível concluir a solicitação.");
     }
@@ -238,16 +237,14 @@ let products = [];
     try {
   
       const data = await api(
-        "/AGROLINK-2026/api/products.php?nocache=" + Date.now()
+        "api/products.php?nocache=" + Date.now()
       );
-  
-      console.log("========== PRODUTOS ==========");
-      console.log("data:", data);
-      console.log("data.products:", data.products);
-      console.log("typeof data.products:", typeof data.products);
-      console.log("Array?", Array.isArray(data.products));
-      console.log("==============================");
-  
+
+
+
+
+
+
       if (!data.products) {
         throw new Error("A API não enviou o campo products.");
       }
@@ -265,9 +262,7 @@ let products = [];
       renderCartCount();
   
     } catch (error) {
-  
-      console.error("Erro ao carregar produtos:", error);
-  
+
       products = [];
   
       grid.innerHTML = `
@@ -333,11 +328,13 @@ let products = [];
     e.preventDefault();
     const email = $("#newsletter-email").value.trim();
     if(!email) return;
-    const button = e.currentTarget.querySelector("button");
+    const newsletterForm = e.currentTarget;
+    const button = newsletterForm.querySelector("button");
     button.disabled = true;
     try {
-      const data = await api("api/newsletter.php", {method:"POST", body:JSON.stringify({email, company:e.currentTarget.company.value})});
-      e.currentTarget.reset();
+      const session = await api("api/user-session.php");
+      const data = await api("api/newsletter.php", {method:"POST", headers:{"Content-Type":"application/json","X-CSRF-Token":session.csrf}, body:JSON.stringify({email, company:newsletterForm.company.value})});
+      newsletterForm.reset();
       status(data.message);
       button.innerHTML = '<i data-lucide="check"></i>';
     } catch(error) {
@@ -349,38 +346,7 @@ let products = [];
     }
   });
   
-  document.addEventListener("submit", async e => {
-    if(e.target.id !== "checkout-form") return;
-    e.preventDefault();
-    const form = new FormData(e.target);
-    const name = String(form.get("customerName")||"").trim();
-    const email = String(form.get("customerEmail")||"").trim();
-    const phone = String(form.get("customerPhone")||"").trim();
-    const address = String(form.get("deliveryAddress")||"").trim();
-    if(name.length < 2 || !email.includes("@") || phone.replace(/\D/g,"").length < 10 || address.length < 8){
-      alert("Confira os dados de entrega antes de continuar.");
-      return;
-    }
-    const submitButton = e.target.querySelector('[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.textContent = "Salvando pedido...";
-    try {
-      const data = await api("api/orders.php", {method:"POST", body:JSON.stringify({
-        customer:{name,email,phone,region:form.get("deliveryRegion"),address},
-        paymentMethod:form.get("paymentMethod"),
-        items:cartItems().map(p => ({productId:p.id, quantity:Number(state.cart[p.id])}))
-      })});
-      state.receipt = data.order;
-      state.checkoutStep = "success";
-      renderCart();
-      status(`Pedido ${state.receipt.code} registrado com sucesso.`);
-    } catch(error) {
-      alert(error.message);
-      status(error.message);
-      submitButton.disabled = false;
-      submitButton.textContent = "Reservar pedido";
-    }
-  });
+
 
   document.addEventListener("DOMContentLoaded", () => {
     const btnCarregar = document.getElementById("btn-carregar-mais");

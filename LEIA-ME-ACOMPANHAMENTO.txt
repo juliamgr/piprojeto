@@ -1,0 +1,69 @@
+AGROLINK — BOTÃO DE MAPA E ACOMPANHAMENTO DE ENTREGA
+
+INSTALAÇÃO
+Este pacote usa o backend recuperado nesta conversa e foi adaptado aos novos
+arquivos de index, conta e cadastro enviados. Não muda a configuração do banco.
+
+1. Faça uma cópia da pasta atual AGROLINK-2026.
+2. Extraia o ZIP, abra a pasta AGROLINK-2026 que está dentro dele e copie TODO
+   O CONTEÚDO para C:\xampp\htdocs\AGROLINK-2026, aceitando substituir.
+   Não apague a pasta original: o ZIP contém só a atualização.
+   Os arquivos já têm os nomes corretos, sem os sufixos (1), (2) e (3).
+3. No phpMyAdmin, SELECIONE seu banco existente do Agrolink e importe:
+   BACKEND/database/entregas.sql
+   Esse SQL pode ser reimportado e não apaga dados. Cria apenas order_delivery.
+4. Mantenha Apache e MySQL ligados e pressione Ctrl+F5 ao abrir a loja.
+
+NO ADMIN
+Abra Pedidos e entre nos detalhes de um pedido.
+Em "Previsão de entrega", informe os minutos a partir de agora e salve.
+Exemplo: 45 minutos. O sistema grava a previsão de chegada correspondente.
+Se você salvar outro número, a previsão é recalculada a partir desse momento.
+
+Em "Próxima etapa", avance pelas etapas normais do pedido:
+Confirmado -> Em separação -> Enviado -> Concluído.
+Marque Enviado quando o pedido sair e Concluído quando chegar ao cliente.
+Ao salvar o prazo, o status atual é mantido. O prazo não confirma a saída
+nem a conclusão da entrega sozinho.
+
+PARA O CLIENTE
+Quando estiver logado, aparece um botão quadrado com desenho de mapa ao lado
+da sacola. Ao clicar, a pessoa abre "Minhas entregas" e consulta seus pedidos.
+Há acesso também em Minha conta e na confirmação de uma compra.
+
+A página mostra:
+- Status atual: aguardando confirmação, confirmado, em preparação,
+  saiu para entrega, entregue ou cancelado.
+- Previsão de chegada e contagem do tempo restante.
+- Horário de saída quando Enviado foi registrado no admin.
+- Etapas, endereço e botão para abrir o destino no Google Maps.
+
+A consulta é atualizada a cada 30 segundos enquanto a página estiver visível,
+e há um botão Atualizar agora. Os horários exibidos usam o fuso de Brasília.
+Sem previsão, aparece que a equipe ainda não informou o prazo.
+Se o prazo vencer, aparece que a previsão foi ultrapassada e que a página
+aguarda atualização da equipe. O pedido não muda para Entregue automaticamente.
+O mapa exibe o endereço do pedido; não há GPS ao vivo do entregador.
+Uma conta consulta apenas os pedidos vinculados ao seu próprio ID.
+Pedidos antigos sem user_id não são vinculados por e-mail automaticamente.
+
+LINKS (adicione a porta se o seu Apache usa, por exemplo, localhost:8080)
+Loja: http://localhost/AGROLINK-2026/index.html
+Cliente: http://localhost/AGROLINK-2026/pedidos.php
+Admin: http://localhost/AGROLINK-2026/BACKEND/admin/orders.php
+
+COMPATIBILIDADE
+A entrada FRONT-AGROLINK também recebe os mesmos botões e recursos.
+A consulta de login usa api/user-session.php. Foi incluída uma compatibilidade
+para api/cliente-sessao.php, que aparecia no arquivo de conta enviado.
+Os dados são guardados no MySQL usado pelo backend; não em pedidos JSON.
+O pacote preserva a aparência dos arquivos enviados e acrescenta o botão de mapa.
+
+TESTES
+Verifiquei a sintaxe PHP/JS e o botão em estados de login/logout.
+Testei com PHP 8.3 e MariaDB 10.11 num banco separado: cadastro/login, perfil,
+pedidos privados por conta, previsão persistida, rejeição de CSRF inválido,
+status Enviado com horário de saída e consultas pelas duas entradas da loja.
+Os testes de estoque, prevenção de pedidos duplicados e cancelamento passaram.
+O ZIP foi extraído e conferido. O seu banco local continua dependendo da
+configuração existente em BACKEND/app/config.php.

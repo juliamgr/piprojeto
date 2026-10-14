@@ -20,7 +20,6 @@ page_start('Produtores do RS','produtores'); ?>
     <div>
     <p class="eyebrow">AGROINDÚSTRIAS FAMILIARES / PEAF</p><h2>Consulte nossos Produtores.</h2>
 </div>
-<span class="pr-source-tag">Planilha · agosto de 2026</span>
 </section>
 <section class="stats pr-stats" aria-label="Resumo de toda a base"><article><span>Agroindústrias</span><strong><?= number_format((int)$stats['total'],0,',','.') ?></strong><small>Cadastros na planilha</small></article><article><span>Municípios</span><strong><?= (int)$stats['municipios'] ?></strong><small>Localidades informadas</small></article><article><span>Orgânico certificado</span><strong><?= (int)$stats['organicos'] ?></strong><small>Classificação declarada na fonte</small></article><article><span>Registros a conferir</span><strong><?= (int)$stats['alertas'] ?></strong><small>Erros ou datas atípicas na origem</small></article></section>
 <form class="panel pr-filters" method="get" action="produtores.php"><label class="pr-search">Busca<input type="search" name="q" maxlength="150" value="<?= e($filters['q']) ?>" placeholder="Nome, alimento, município ou registro PEAF"></label>

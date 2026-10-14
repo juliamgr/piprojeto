@@ -1,0 +1,93 @@
+AGROLINK — RECUPERAÇÃO DO BACKEND E DAS CONTAS
+
+O QUE FOI CORRIGIDO
+O arquivo enviado misturava duas lojas (na pasta principal e em FRONT-AGROLINK),
+um BACKEND dentro de outro BACKEND e APIs antigas que tentavam gravar pedidos
+em arquivos JSON. Na entrada principal, os caminhos do PHP apontavam para fora
+da pasta do projeto; o script js/conta.js não estava presente e a consulta da
+sessão não devolvia o token e os dados necessários. O menu de usuários do admin
+também estava ausente.
+
+A recuperação deixa UM backend em AGROLINK-2026/BACKEND e faz tanto a loja da
+pasta principal quanto FRONT-AGROLINK usar esse mesmo backend, sessão e banco.
+Inclui cadastro, login, edição da conta, dados da sacola, pedidos, usuários
+no admin e acompanhamento de entregas. Corrige também as categorias que já
+existiam no formulário do admin e os caminhos das imagens dos produtos.
+
+INSTALAÇÃO — USE ESTE ZIP COMO ATUALIZAÇÃO
+1. Faça uma cópia da pasta atual AGROLINK-2026 e exporte seu banco no phpMyAdmin.
+2. Extraia o ZIP em uma pasta temporária.
+3. Abra a pasta AGROLINK-2026 que está DENTRO do ZIP.
+4. Copie TODO O CONTEÚDO dela para:
+   C:\xampp\htdocs\AGROLINK-2026\
+   Aceite substituir os arquivos.
+   O resultado deve ser AGROLINK-2026\BACKEND\app\bootstrap.php,
+   e NÃO AGROLINK-2026\BACKEND\BACKEND\app\bootstrap.php.
+   Não apague a pasta atual. Este ZIP não contém todas as fotos/CSS da loja;
+   ele contém o backend e os arquivos necessários para reparar a integração.
+5. O ZIP não substitui BACKEND/app/config.php.
+   Se esse arquivo JÁ EXISTIR, mantenha as configurações do SEU banco.
+   Se estiver AUSENTE, copie BACKEND/app/config.example.php para config.php.
+   O exemplo usa MySQL em 127.0.0.1, banco agrolink, usuário root e senha vazia.
+   Altere esses valores se sua instalação usar outro nome, porta ou senha.
+   IMPORTANTE: o dbname precisa ser o banco que já possui suas contas/produtos.
+6. Ligue Apache e MySQL no XAMPP. No phpMyAdmin, SELECIONE seu banco atual,
+   o mesmo indicado em config.php. Importe SOMENTE:
+   BACKEND/database/RECUPERAR-SEM-APAGAR.sql
+   Esse SQL cria as tabelas que faltarem e a ligação dos pedidos com a conta,
+   sem DELETE, DROP ou TRUNCATE e sem cadastros de demonstração.
+   Pode ser executado novamente. Mantém registros já existentes.
+   NÃO importe demo.sql e NÃO recrie ou apague o banco atual.
+7. Abra a loja e pressione Ctrl+F5:
+   http://localhost/AGROLINK-2026/index.html
+   A entrada antiga também funciona:
+   http://localhost/AGROLINK-2026/FRONT-AGROLINK/index.html
+   Se seu Apache usa uma porta, mantenha-a, por exemplo localhost:8080.
+
+ONDE CONFERIR
+- Conta de cliente:
+  http://localhost/AGROLINK-2026/conta.php
+- Painel administrativo:
+  http://localhost/AGROLINK-2026/BACKEND/admin/
+- Usuários cadastrados (após entrar como admin):
+  http://localhost/AGROLINK-2026/BACKEND/admin/users.php
+- Verificar banco/tabelas e quantidade de registros (após entrar como admin):
+  http://localhost/AGROLINK-2026/BACKEND/admin/diagnostico.php
+- Entregas da conta de cliente:
+  http://localhost/AGROLINK-2026/pedidos.php
+
+Os usuários não ficam guardados na pasta BACKEND. Ficam no banco MySQL.
+Se "Usuários" mostrar zero cadastros, confira primeiro o nome do banco no
+config.php e em "Verificar instalação". O pacote não contém um backup das
+contas reais; se o banco original também foi apagado, será necessário restaurar
+uma exportação desse banco. Apenas restaurar PHP não recupera registros apagados.
+Pedidos antigos sem user_id não são associados a uma conta por adivinhação.
+
+CONTA E ENTREGA
+- Entre na conta; Minha conta permite editar e salvar os dados.
+- O checkout consulta os dados salvos no banco ao abrir os detalhes da entrega.
+- Os pedidos novos ficam ligados à conta autenticada e aparecem no admin.
+- Nos detalhes do pedido, o admin informa a previsão em minutos.
+- Enviado aparece ao cliente como "Saiu para entrega"; Concluído, como "Entregue".
+- O botão com ícone de mapa abre o acompanhamento e o endereço de destino.
+- O acompanhamento consulta o backend a cada 30 segundos.
+- Contas de cliente não ganham permissão de administrador.
+
+TESTES REALIZADOS
+Testei esta recuperação em PHP 8.3 e MariaDB 10.11 num banco separado:
+- Importação inicial e reimportação da recuperação sem perder registros.
+- Reparo de um esquema antigo sem user_id e com categoria restrita.
+- Sessão/CSRF nas duas entradas, cadastro e login.
+- Alteração do perfil mantida depois de sair e entrar de novo.
+- Mudança de e-mail exige senha atual.
+- Produtos do banco e caminhos das imagens nas duas entradas.
+- Pedido salvo, vínculo com usuário, estoque e prevenção de pedidos duplicados.
+- Uma conta não consulta pedidos de outra.
+- Usuários no admin, gravação do prazo e mudança de status da entrega.
+- Rejeição de operação administrativa sem token CSRF válido.
+- Reimportação após criar contas/pedidos preserva os dados.
+- Regras de estoque, cancelamento e validade dos alimentos.
+- Sintaxe dos arquivos PHP/JS e existência dos scripts/CSS carregados na loja.
+
+Seu MySQL local não estava disponível para inspeção. Confirme no XAMPP os
+valores do config.php e a instalação do SQL no banco correto.

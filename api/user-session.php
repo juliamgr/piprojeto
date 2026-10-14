@@ -1,26 +1,18 @@
 <?php
 declare(strict_types=1);
-
-require __DIR__ . '/../../BACKEND/app/bootstrap.php';
+require __DIR__ . '/../BACKEND/app/bootstrap.php';
+require __DIR__ . '/../BACKEND/app/profile.php';
 
 api_run('GET', function () {
-    if (
-        empty($_SESSION['user_id']) ||
-        time() - ($_SESSION['user_last_active'] ?? 0) > 1800
-    ) {
-        unset(
-            $_SESSION['user_id'],
-            $_SESSION['user_name'],
-            $_SESSION['user_last_active']
-        );
-
-        json_out(['loggedIn' => false]);
-    }
-
-    $_SESSION['user_last_active'] = time();
-
+    $user = current_customer();
+    // Only expose fields required for checkout, never password hashes or CPF.
+    $customer = $user ? array_intersect_key($user, array_flip(['name','email','phone','city','address','neighborhood','zip_code'])) : null;
     json_out([
-        'loggedIn' => true,
-        'name' => $_SESSION['user_name'] ?? ''
+        'success' => true,
+        'csrf' => $_SESSION['csrf'],
+        'loggedIn' => $user !== null,
+        'userId' => $user ? (int)$user['id'] : null,
+        'name' => $user['name'] ?? '',
+        'customer' => $customer
     ]);
 });

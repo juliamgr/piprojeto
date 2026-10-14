@@ -12,8 +12,11 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png">
 <link rel="manifest" href="/site.webmanifest">
 
+<script src="js/conta.js" defer></script>
+<script src="js/pedidos-conta.js" defer></script>
+<script src="js/checkout-perfil.js" defer></script>
+<link rel="stylesheet" href="entregas-botao.css">
 </head>
-<script src="js/conta.js"></script>
 <body>
 <main>
 
@@ -21,12 +24,12 @@
     <a class="brand" href="#inicio"><img src="img/agrolink-logo.png"></a>
     <nav class="main-nav" aria-label="Navegação principal">
       <a href="#feira">Feira</a>
-      <a href="#como-funciona">Como funciona</a>
       <a href="index2.html">Retirada</a>
       <a href="index4 .html">Filiação</a>
       <a href="index3.php">Sobre nós</a>
     </nav>
     <div class="header-actions">
+      <a href="conta.php" id="cliente-conta" class="signup-open">Entrar</a>
       <button class="signup-open" type="button" data-open-signup aria-haspopup="dialog" aria-controls="signup-dialog">Cadastre-se</button>
       <label class="location-select">
         <i data-lucide="map-pin" aria-hidden="true"></i>
@@ -39,6 +42,7 @@
         </select>
         <i data-lucide="chevron-down" aria-hidden="true"></i>
       </label>
+      <a id="cliente-entregas" class="delivery-route-link" href="pedidos.php" title="Acompanhar minhas entregas" aria-label="Acompanhar minhas entregas" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/><path d="M9 3v15M15 6v15"/></svg></a>
       <button class="bag-button" id="open-cart" type="button" aria-label="Abrir sacola">
         <i data-lucide="shopping-bag" aria-hidden="true"></i>
         <span class="bag-count" id="bag-count" hidden>0</span>

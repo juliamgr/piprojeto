@@ -336,7 +336,7 @@ page_start(
                 >
 
                     <?php foreach (
-                        ['Cestas', 'Folhas', 'Frutas', 'Legumes', 'Mel', 'Temperos', 'Ovos','Laticínio', 'Panificados', 'Tubérculos' ]
+                        product_categories()
                         as $category
                     ): ?>
 

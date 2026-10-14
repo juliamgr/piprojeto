@@ -16,7 +16,7 @@ CREATE TABLE login_attempts (
 CREATE TABLE products (
  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
  name VARCHAR(120) NOT NULL,
- category ENUM('Cestas','Folhas','Frutas','Legumes', 'Mel',) NOT NULL,
+ category VARCHAR(60) NOT NULL,
  producer VARCHAR(120) NOT NULL,
  location VARCHAR(100) NOT NULL,
  unit VARCHAR(40) NOT NULL,

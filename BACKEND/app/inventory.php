@@ -1,7 +1,7 @@
 <?php
 function save_product(array $data,int $id): int {
-    $name=field($data,'name',2,120); $category=field($data,'category',2,30);
-    if (!in_array($category,['Cestas','Folhas','Frutas','Legumes'],true)) throw new DomainException('Categoria inválida.');
+    $name=field($data,'name',2,120); $category=field($data,'category',2,60);
+    if (!in_array($category,product_categories(),true)) throw new DomainException('Categoria inválida.');
     $producer=field($data,'producer',2,120); $location=field($data,'location',2,100); $unit=field($data,'unit',1,40);
     $price=str_replace(',','.',field($data,'price',1,12));
     if (!preg_match('/^\d{1,5}(\.\d{1,2})?$/D',$price)) throw new DomainException('Preço inválido. Exemplo: 12,90.');
@@ -47,3 +47,9 @@ function move_stock(int $id,array $data): void {
     db()->commit();
 }
 function movement_labels(): array { return ['entrada'=>'Entrada','ajuste_entrada'=>'Correção (+)','ajuste_saida'=>'Correção (−)','reserva'=>'Reserva de pedido','cancelamento'=>'Devolução por cancelamento','doacao'=>'Doação','perda'=>'Perda / descarte']; }
+
+function product_categories(): array {
+    $defaults = ['Cestas','Folhas','Frutas','Legumes','Mel','Temperos','Ovos','Laticínio','Laticínios','Panificados','Tubérculos'];
+    $existing = query('SELECT DISTINCT category FROM products ORDER BY category')->fetchAll(PDO::FETCH_COLUMN);
+    return array_values(array_unique(array_merge($defaults, $existing)));
+}

@@ -97,3 +97,10 @@
     outline: 3px solid #9abb55;
     outline-offset: 3px;
   }
+.conta-perfil { max-width: 760px; }
+.perfil-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
+select, textarea { width: 100%; padding: 13px; border: 1px solid #d9ddcf; border-radius: 9px; font: inherit; font-size: 16px; background: white; color: #073f2a; }
+textarea { resize: vertical; }
+.conta-sucesso { padding: 12px; border-radius: 9px; background: #e7f2d8; }
+.conta-voltar { display: block; text-align: center; margin-top: 24px; }
+@media (max-width: 560px) { .perfil-grid { grid-template-columns: 1fr; } .conta-card { padding: 24px; } body { padding: 16px; } }

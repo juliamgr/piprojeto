@@ -43,7 +43,7 @@ function sobre_filter_sql(array $filters,array $categories): array {
 }
 function sobre_load(array $filters,int $requestedPage,array $categories): array {
     // Reutiliza apenas a conexão de produtores; não inicia login nem lê pedidos.
-    $backend=dirname(__DIR__,2).'/BACKEND/app/produtores.php';
+    $backend=dirname(__DIR__).'/BACKEND/app/produtores.php';
     if (!is_file($backend)) throw new RuntimeException('Instale o módulo Produtores RS no BACKEND.');
     require_once $backend;
     [$where,$params]=sobre_filter_sql($filters,$categories);

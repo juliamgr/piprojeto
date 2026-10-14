@@ -79,7 +79,7 @@ function require_admin(): void {
 }
 function flash(string $message, string $kind='success'): void { $_SESSION['flash'] = [$message,$kind]; }
 function redirect(string $to): void { header('Location: '.$to, true,303); exit; }
-function statuses(): array { return ['recebido'=>'Recebido','confirmado'=>'Confirmado','separacao'=>'Em separação','enviado'=>'Enviado','concluido'=>'Concluído','cancelado'=>'Cancelado']; }
+function statuses(): array { return ['recebido'=>'Aguardando confirmação','confirmado'=>'Confirmado','separacao'=>'Em separação','enviado'=>'Enviado','concluido'=>'Concluído','cancelado'=>'Cancelado']; }
 function next_statuses(string $status): array {
     return ['recebido'=>['confirmado','cancelado'],'confirmado'=>['separacao','cancelado'],'separacao'=>['enviado','cancelado'],'enviado'=>['concluido'],'concluido'=>[],'cancelado'=>[]][$status] ?? [];
 }
