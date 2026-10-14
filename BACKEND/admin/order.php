@@ -8,6 +8,9 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
             $next=field($_POST,'status',3,20); $note=field($_POST,'note',0,220);
             if ($next==='cancelado' && empty($_POST['confirm_cancel'])) throw new DomainException('Marque a confirmação para cancelar e devolver os itens ao estoque.');
             update_order($id,$next,$note); flash('Status atualizado.');
+        } elseif (($_POST['action'] ?? '')==='confirm_delivery') {
+            update_order($id,'concluido','Entrega recebida pelo cliente. Confirmada pela equipe.');
+            flash('Entrega confirmada. O cliente já pode consultar o status Entregue.');
         } elseif (($_POST['action'] ?? '')==='delivery') {
             save_delivery_estimate($id,$_POST); flash('Previsão salva e disponível para o cliente.');
         } elseif (($_POST['action'] ?? '')==='notes') {
@@ -41,6 +44,13 @@ page_start('Detalhes do pedido','orders'); ?>
 <button class="button full" type="submit">Salvar previsão para o cliente</button></form>
 <p class="small muted">Quando o pedido sair, altere o status para Enviado em Próxima etapa. O cliente verá “Saiu para entrega”. Concluído aparece como “Entregue”. A previsão não muda o status sozinha.</p>
 <?php endif; endif; ?></section>
-<section class="panel"><h2>Próxima etapa</h2><?php $next=next_statuses($o['status']); if($next): ?><form method="post"><?php csrf_field(); ?><input type="hidden" name="action" value="status"><label>Alterar status<select name="status"><?php foreach($next as $s): ?><option value="<?= e($s) ?>"><?= e(statuses()[$s]) ?></option><?php endforeach; ?></select></label><label>Motivo ou observação<input name="note" maxlength="220" placeholder="Ex.: itens conferidos pela equipe"></label><?php if(in_array('cancelado',$next,true)): ?><label class="checkbox"><input type="checkbox" name="confirm_cancel" value="1"> Se escolher Cancelado, confirmo a devolução dos itens ao estoque.</label><?php endif; ?><button class="button full">Salvar status</button></form><?php else: ?><p class="muted">Este pedido foi encerrado.</p><?php endif; ?></section>
+<section class="panel"><h2>Próxima etapa</h2>
+<?php if ($o['status']==='enviado'): ?>
+<p>Confirme quando o cliente receber o pedido. O acompanhamento será atualizado para <strong>Entregue</strong>.</p>
+<form method="post"><?php csrf_field(); ?><input type="hidden" name="action" value="confirm_delivery">
+<button class="button lime full" type="submit">✓ Confirmar entrega</button></form>
+<?php elseif ($o['status']==='concluido'): ?>
+<p class="muted">✓ Entrega confirmada. Este pedido está concluído.</p>
+<?php else: $next=next_statuses($o['status']); if($next): ?><form method="post"><?php csrf_field(); ?><input type="hidden" name="action" value="status"><label>Alterar status<select name="status"><?php foreach($next as $s): ?><option value="<?= e($s) ?>"><?= e(statuses()[$s]) ?></option><?php endforeach; ?></select></label><label>Motivo ou observação<input name="note" maxlength="220" placeholder="Ex.: itens conferidos pela equipe"></label><?php if(in_array('cancelado',$next,true)): ?><label class="checkbox"><input type="checkbox" name="confirm_cancel" value="1"> Se escolher Cancelado, confirmo a devolução dos itens ao estoque.</label><?php endif; ?><button class="button full">Salvar status</button></form><?php else: ?><p class="muted">Este pedido foi encerrado.</p><?php endif; endif; ?></section>
 <section class="panel"><h2>Observações internas</h2><form method="post"><?php csrf_field(); ?><input type="hidden" name="action" value="notes"><label class="sr-only" for="notes">Observações internas</label><textarea id="notes" name="notes" rows="4" maxlength="3000"><?= e($o['notes']) ?></textarea><button class="button secondary full">Salvar observação</button></form></section></div></div>
 <?php page_end(); ?>

@@ -52,7 +52,7 @@
     map.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${order.address}, ${order.region}, Rio Grande do Sul, Brasil`);
     map.target = '_blank'; map.rel = 'noopener noreferrer';
     details.append(map);
-    details.append(node('p','O acompanhamento mostra as etapas informadas pela equipe e a previsão de chegada. O mapa exibe o endereço de entrega, sem localização ao vivo do entregador.','muted'));
+    details.append(node('p',' ','muted'));
     if (!dialog.open) dialog.showModal();
   }
   function render() {

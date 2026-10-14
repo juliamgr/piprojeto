@@ -198,7 +198,8 @@ $emailValue = is_string($_POST['email'] ?? null)
 </head>
 <body>
     <main class="conta-card <?= $loggedIn ? 'conta-perfil' : '' ?>">
-        <a class="conta-marca" href="index.html">AGROLINK</a>
+    <a class="conta-voltar" href="pedidos.php"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/><path d="M9 3v15M15 6v15"/></svg></a>
+        <a class="conta-marca" href="index.html"><img src="img/agrolink-logo.png" width="230px"></a>
 
         <?php if ($error): ?>
             <p class="conta-erro" role="alert"><?= e($error) ?></p>
@@ -207,8 +208,6 @@ $emailValue = is_string($_POST['email'] ?? null)
         <?php if ($loggedIn): ?>
             <h1>Olá, <?= e($_SESSION['user_name'] ?? '') ?>!</h1>
 
-            <a class="conta-voltar" href="pedidos.php"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/><path d="M9 3v15M15 6v15"/></svg> Acompanhar minhas entregas</a>
-            <p>Atualize seus dados. Eles ficam salvos na sua conta e preenchem sua próxima compra.</p>
             <?php if ($saved): ?><p class="conta-sucesso" role="status">Informações salvas com sucesso!</p><?php endif; ?>
             <form method="post" class="perfil-form">
                 <?php csrf_field(); ?>
