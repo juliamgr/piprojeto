@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Agrolink — produtos orgânicos da agricultura familiar do Rio Grande do Sul.">
   <title>Agrolink</title>
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="cadastro.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<script src="js/conta.js" defer></script>
+<script src="js/pedidos-conta.js" defer></script>
+<script src="js/checkout-perfil.js" defer></script>
+<link rel="stylesheet" href="entregas-botao.css">
 </head>
 <body>
 <main>
@@ -13,12 +23,14 @@
   <header class="site-header">
     <a class="brand" href="#inicio"><img src="img/agrolink-logo.png"></a>
     <nav class="main-nav" aria-label="Navegação principal">
-      <a href="#inicio">Início</a>
       <a href="#feira">Feira</a>
-      <a href="#produtores">Produtores</a>
-      <a href="#como-funciona">Como funciona</a>
+      <a href="index2.html">Retirada</a>
+      <a href="index4 .html">Filiação</a>
+      <a href="index3.php">Sobre nós</a>
     </nav>
     <div class="header-actions">
+      <a href="conta.php" id="cliente-conta" class="signup-open">Entrar</a>
+      <button class="signup-open" type="button" data-open-signup aria-haspopup="dialog" aria-controls="signup-dialog">Cadastre-se</button>
       <label class="location-select">
         <i data-lucide="map-pin" aria-hidden="true"></i>
         <span class="sr-only">Região de entrega</span>
@@ -30,24 +42,7 @@
         </select>
         <i data-lucide="chevron-down" aria-hidden="true"></i>
       </label>
-      <div class="auth-wrap">
-        <button class="auth-button" id="auth-button" type="button" aria-haspopup="true" aria-expanded="false">
-          <i data-lucide="user" aria-hidden="true"></i>
-          <span class="auth-button-label">Entrar</span>
-        </button>
-        <div class="profile-menu" id="profile-menu" hidden>
-          <div class="profile-menu-header">
-            <span class="profile-avatar" id="profile-avatar">?</span>
-            <div>
-              <strong id="profile-name">—</strong>
-              <small id="profile-email">—</small>
-            </div>
-          </div>
-          <button class="profile-menu-item" id="profile-logout" type="button">
-            <i data-lucide="log-out" aria-hidden="true"></i> Sair da conta
-          </button>
-        </div>
-      </div>
+      <a id="cliente-entregas" class="delivery-route-link" href="pedidos.php" title="Acompanhar minhas entregas" aria-label="Acompanhar minhas entregas" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/><path d="M9 3v15M15 6v15"/></svg></a>
       <button class="bag-button" id="open-cart" type="button" aria-label="Abrir sacola">
         <i data-lucide="shopping-bag" aria-hidden="true"></i>
         <span class="bag-count" id="bag-count" hidden>0</span>
@@ -60,31 +55,22 @@
 
   <section class="hero section-shell" id="inicio">
     <div class="hero-copy">
-      <p class="eyebrow"><i data-lucide="leaf"></i> Produtos orgânicos</p>
-      <h1>Da lavoura gaúcha direto para a sua mesa.</h1>
+      <h1>
+        Conheça o <em>Agrolink</em></h1>
       <p class="hero-description">Frutas, verduras e cestas orgânicas de famílias produtoras. Com origem conhecida, preço justo e menos desperdício.</p>
       <div class="hero-actions">
         <button class="button button-primary" id="buy-now" type="button">Comprar agora <i data-lucide="arrow-right"></i></button>
-        <a class="button button-secondary" href="#produtores">Conhecer produtores <i data-lucide="arrow-right"></i></a>
+        <button class="button button-secondary" type="button" data-open-signup aria-haspopup="dialog" aria-controls="signup-dialog">Criar minha conta <i data-lucide="user-plus" aria-hidden="true"></i></button>
       </div>
       <div class="hero-proof" aria-label="Resultados da rede Agrolink">
         <span><strong>42</strong> famílias</span>
+        <span><strong>18</strong> municípios</span>
         <span><strong>48h</strong> da horta</span>
       </div>
     </div>
     <div class="hero-image-wrap">
-      <img class="hero-image" src="img/gatoteste.jfif" alt="">
-      <div class="harvest-note">
-        <span class="harvest-icon"><i data-lucide="clock-3"></i></span>
-        <span><strong>Colheita de hoje</strong>Chega fresca até você</span>
-      </div>
+      <img class="hero-image" src="img/hero.jpeg" alt="Mãos de agricultor organizando uma cesta de hortaliças recém-colhidas">
     </div>
-  </section>
-
-  <section class="trust-band section-shell" aria-label="Compromissos Agrolink">
-    <article><span class="trust-icon"><i data-lucide="shield-check"></i></span><div><strong>Origem verificada</strong><small>Você sabe quem cultivou</small></div></article>
-    <article><span class="trust-icon"><i data-lucide="sprout"></i></span><div><strong>Colheita fresca</strong><small>Menos tempo no caminho</small></div></article>
-    <article><span class="trust-icon"><i data-lucide="handshake"></i></span><div><strong>Preço justo</strong><small>Mais valor para quem produz</small></div></article>
   </section>
 
   <section class="catalog-section" id="feira">
@@ -107,23 +93,20 @@
         </label>
       </div>
 
-      <div class="product-grid" id="product-grid"></div>        
-      </div>
+      <div class="product-grid" id="product-grid" aria-live="polite"></div>
     </div>
   </section>
 
   <section class="producer-section section-shell" id="produtores">
     <div class="producer-image-stack" aria-hidden="true">
-      <img src="img/agrolink-folhas.png" alt="">
-      <img src="img/agrolink-frutas.png" alt="">
+      <img src="img/plantacao.jpg" alt="">
+      <img src="img/agricultores1.jpg" alt="">
       <div class="producer-seal"><i data-lucide="users"></i><strong>100%</strong><span>agricultura<br>familiar</span></div>
     </div>
     <div class="producer-copy">
-      <p class="eyebrow"><i data-lucide="users"></i> Quem cultiva</p>
-      <h2>Antes de ser alimento, é história de família.</h2>
-      <p>Cada produto da Agrolink tem nome, município e uma família por trás. A compra direta reduz atravessadores e remunera melhor quem trabalha a terra, sem encarecer a sua cesta.</p>
-      <blockquote>“Agora colhemos sabendo para onde vai. Isso muda o planejamento da semana e evita que alimento bom fique na lavoura.”</blockquote>
-      <div class="quote-author"><span>BR</span><div><strong>Brenda Ronchette</strong><small>Produtora agroecológica · Nova Santa Rita</small></div></div>
+      <h2> <span><img src="img/logo-fetag-small.svg"></span> <div class="progress-line"> </div>
+        Juntos por quem planta, colhe e alimenta o nosso estado</h2>
+      <p>A parceria entre o Agrolink, o Governo do Rio Grande do Sul e a FETAG-RS nasce de um compromisso comum: valorizar a agricultura familiar e aproximar quem produz de quem consome. Unimos esforços para dar visibilidade aos produtores locais, incentivar o consumo consciente e fortalecer os laços entre o campo e a cidade. Porque, por trás de cada alimento, há uma família, uma história e o cuidado com a nossa terra.</p>
       <a class="text-link" href="#como-funciona">Conheça nossa rede <i data-lucide="arrow-right"></i></a>
     </div>
   </section>
@@ -146,23 +129,24 @@
 
   <section class="impact-section">
     <div class="impact-copy">
-      <p class="eyebrow light"><i data-lucide="recycle"></i>hello world</p>
-      <h2>lorem ipsum</h2>
-      <p>lorem ispum</p>
-      <button class="button button-light" id="impact-buy" type="button">lorem ipsum<i data-lucide="arrow-right"></i></button>
+      <p class="eyebrow light"><i data-lucide="recycle"></i> Menos desperdício</p>
+      <h2>O que é colhido encontra uma mesa.</h2>
+      <p>A demanda chega antes da colheita. Assim, as famílias planejam melhor, reduzem perdas e entregam alimentos naturalmente mais frescos.</p>
+      <button class="button button-light" id="impact-buy" type="button">Monte sua cesta <i data-lucide="arrow-right"></i></button>
     </div>
     <div class="impact-stats">
-      <article><strong>x</strong><span>.</span></article>
-      <article><strong>x</strong><span>.</span></article>
-      <article><strong>x</strong><span>.</span></article>
+      <article><strong>3,8 t</strong><span>de alimentos aproveitados</span></article>
+      <article><strong>27%</strong><span>mais renda média ao produtor</span></article>
+      <article><strong>86 km</strong><span>de distância média até você</span></article>
     </div>
   </section>
 
   <section class="testimonial-section section-shell">
+
     <div class="newsletter-card">
       <p class="eyebrow"><i data-lucide="leaf"></i> Novidades da colheita</p>
       <h2>Receba a feira da semana.</h2>
-      <p>Produtos sazonais, novas famílias e receitas simples no seu e-mail.</p>
+      <p></p>
       <form id="newsletter-form">
         <label class="sr-only" for="newsletter-email">Seu melhor e-mail</label>
         <input id="newsletter-email" name="email" type="email" placeholder="Seu melhor e-mail" required>
@@ -175,46 +159,14 @@
   <footer class="site-footer">
     <div class="footer-main section-shell">
       <div class="footer-brand">
-        <a class="brand brand-light" href="#inicio">Agrolink<span class="brand-leaf"></span></a>
-        <p>Alimento orgânico, origem próxima e relações mais justas no Rio Grande do Sul.</p>
-        <div class="social-links"><a href="#inicio" aria-label="Instagram"><i data-lucide="camera"></i></a><a href="#inicio" aria-label="LinkedIn"><i data-lucide="globe"></i></a></div>
+        <a class="brand brand-light" href="#inicio"><img src="img/LOGO-AGROLINK-DARK.svg"></a>
       </div>
       <div><h3>Agrolink</h3><a href="#feira">Feira da semana</a><a href="#produtores">Produtores</a><a href="#como-funciona">Como funciona</a></div>
-      <div><h3>Atendimento</h3><a href="mailto:oi@agrolink.com.br">oi@agrolink.com.br</a><span>Seg–sex, 8h às 18h</span><span>Porto Alegre, RS</span></div>
-      <div class="certification"><i data-lucide="shield-check"></i><span><strong>Rede verificada</strong>Produtores com origem e manejo conferidos.</span></div>
+      <div><h3>Atendimento</h3><a href="mailto:feedback@agrolink.com.br">feedback@agrolink.com.br</a><span>Seg–sex, 8h às 18h</span><span>Porto Alegre, RS</span></div>
     </div>
-    <div class="footer-bottom section-shell"><span>© 2026 Agrolink.</span><span>Termos de uso · Privacidade</span></div>
   </footer>
 
   <div class="sr-status" id="status" role="status" aria-live="polite"></div>
-  <div class="auth-layer" id="auth-layer" role="presentation" hidden>
-    <button class="auth-backdrop" id="auth-backdrop" type="button" aria-label="Fechar"></button>
-    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-      <button class="auth-close" id="auth-close" type="button" aria-label="Fechar"><i data-lucide="x"></i></button>
-      <div class="auth-tabs" role="tablist">
-        <button type="button" class="active" data-auth-tab="login" role="tab" aria-selected="true">Entrar</button>
-        <button type="button" data-auth-tab="register" role="tab" aria-selected="false">Cadastrar</button>
-      </div>
-      <h2 class="auth-heading" id="auth-title">Bem-vindo de volta</h2>
-
-      <form class="auth-form" id="login-form">
-        <label>E-mail<input type="email" name="email" required autocomplete="email"></label>
-        <label>Senha<input type="password" name="password" required minlength="6" autocomplete="current-password"></label>
-        <p class="auth-error" id="login-error" hidden></p>
-        <button class="button button-primary auth-submit" type="submit">Entrar <i data-lucide="arrow-right"></i></button>
-      </form>
-
-      <form class="auth-form" id="register-form" hidden>
-        <label>Nome completo<input type="text" name="name" required minlength="2" autocomplete="name"></label>
-        <label>E-mail<input type="email" name="email" required autocomplete="email"></label>
-        <label>Telefone<input type="tel" name="phone" placeholder="(51) 99999-9999" autocomplete="tel"></label>
-        <label>Senha<input type="password" name="password" required minlength="6" autocomplete="new-password"></label>
-        <label>Confirmar senha<input type="password" name="passwordConfirm" required minlength="6" autocomplete="new-password"></label>
-        <p class="auth-error" id="register-error" hidden></p>
-        <button class="button button-primary auth-submit" type="submit">Criar conta <i data-lucide="arrow-right"></i></button>
-      </form>
-    </div>
-  </div>
 
   <div class="cart-layer" id="cart-layer" role="presentation" hidden>
     <button class="cart-backdrop" id="cart-backdrop" type="button" aria-label="Fechar sacola"></button>
@@ -228,6 +180,41 @@
   </div>
 </main>
 
+
+
+<dialog id="signup-dialog" class="signup-dialog" aria-labelledby="signup-title">
+  <div class="signup-heading"><div><p class="signup-kicker">FAÇA PARTE DA NOSSA REDE</p><h2 id="signup-title">Crie sua conta.</h2></div><button class="signup-close" type="button" aria-label="Fechar cadastro">×</button></div>
+  <p class="signup-intro">Da nossa terra para a sua mesa. Cadastre-se no Agrolink.</p>
+  <p id="signup-message" class="signup-message" role="alert" tabindex="-1" hidden></p>
+  <form id="signup-form">
+    <p class="signup-hint">Os campos com * são obrigatórios.</p>
+    <div class="signup-grid">
+      <label class="signup-wide">Nome completo *<input name="name" autocomplete="name" required minlength="3" maxlength="90" autofocus></label>
+      <label>E-mail *<input name="email" type="email" autocomplete="email" required maxlength="160"></label>
+      <label>Telefone / WhatsApp *<input name="phone" type="tel" autocomplete="tel" required minlength="10" maxlength="30" placeholder="(51) 99999-9999"></label>
+      <label>Senha *<input name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="72" aria-describedby="signup-password-hint"></label>
+      <label>Confirmar senha *<input name="password_confirmation" type="password" autocomplete="new-password" required maxlength="72"></label>
+      <small id="signup-password-hint" class="signup-wide">Use uma frase com pelo menos 12 caracteres. Limite: 72 bytes; acentos podem ocupar mais de um byte.</small>
+      <label>Tipo de filiação *<select name="member_type" required><option value="">Selecione</option><option>Produtor(a) rural</option><option>Agricultor(a) familiar</option><option>Consumidor(a)</option><option>Organização / entidade</option><option>Outro</option></select></label>
+      <label>Município *<input name="city" autocomplete="address-level2" required minlength="2" maxlength="100" placeholder="Ex.: Porto Alegre"></label>
+      <label class="signup-wide">Endereço *<input name="address" autocomplete="street-address" required minlength="3" maxlength="220" placeholder="Rua, número e complemento"></label>
+    </div>
+    <details class="signup-extra"><summary>Informações adicionais (opcionais)</summary><div class="signup-grid">
+      <label>CPF<input name="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00"></label>
+      <label>Data de nascimento<input name="birth_date" type="date"></label>
+      <label>Bairro<input name="neighborhood" maxlength="100"></label>
+      <label>CEP<input name="zip_code" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000"></label>
+      <label class="signup-wide">O que você produz ou deseja oferecer?<textarea name="production" rows="2" maxlength="4000"></textarea></label>
+      <label class="signup-wide">Observações<textarea name="notes" rows="2" maxlength="4000"></textarea></label>
+    </div></details>
+    <label class="signup-consent"><input type="checkbox" name="privacy" value="1" required><span>Concordo com o uso dos meus dados para cadastro e contato do Agrolink. *</span></label>
+    <button class="button button-primary signup-submit" type="submit">Criar minha conta →</button>
+    <p class="signup-login">Já tem cadastro? <a href="conta.php">Entrar na minha conta</a></p>
+  </form>
+  <div id="signup-success" class="signup-success" role="status" tabindex="-1" hidden><span aria-hidden="true">✓</span><h3>Bem-vindo ao Agrolink!</h3><p>Seu cadastro foi salvo. Entre com seu e-mail e senha para acessar sua conta.</p><a class="button button-primary" href="login.php">Entrar na minha conta →</a></div>
+</dialog>
+
+<script src="cadastro.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="script.js"></script>
 </body>

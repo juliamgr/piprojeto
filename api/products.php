@@ -1,4 +1,7 @@
 <?php
-require __DIR__ . '/bootstrap.php';
-require_method('GET');
-respond(['success' => true, 'products' => read_json('products.json')]);
+declare(strict_types=1);
+require __DIR__ . '/../BACKEND/app/bootstrap.php';
+require __DIR__ . '/../BACKEND/app/catalog.php';
+api_run('GET', function () {
+    json_out(['success'=>true, 'products'=>public_products()]);
+});

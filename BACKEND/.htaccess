@@ -1,0 +1,4 @@
+Options -Indexes
+<FilesMatch "^(README|TESTES|INTEGRACAO)\.md$">
+    Require all denied
+</FilesMatch>
